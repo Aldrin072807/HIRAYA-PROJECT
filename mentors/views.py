@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MentorProfile
 from .forms import MentorProfileForm
+from profiles.models import UserProfile
+from .matching import calculate_match
 
 
 def mentor_list(request):
@@ -26,3 +28,19 @@ def mentor_create(request):
     else:
         form = MentorProfileForm()
     return render(request, "mentors/mentor_form.html", {"form": form})
+
+@login_required
+def mentor_recommendations(request):
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    mentors = MentorProfile.objects.select_related("user").all()
+
+    recommendations = []
+    for mentor in mentors:
+        score = calculate_match(user_profile, mentor)
+        recommendations.append({"mentor": mentor, "score": score})
+
+    recommendations.sort(key=lambda item: item["score"], reverse=True)
+
+    return render(request, "mentors/mentor_recommendations.html", {
+        "recommendations": recommendations
+    })
