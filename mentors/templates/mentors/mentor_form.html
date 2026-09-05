@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Create Mentor Profile</title></head>
+<body>
+    <h1>Create Mentor Profile</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Mentor Profile</button>
+    </form>
+    <a href="{% url 'mentor_list' %}">Back to Mentors</a>
+</body>
+</html>

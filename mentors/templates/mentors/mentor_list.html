@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Mentors</title></head>
+<body>
+    <h1>Mentors</h1>
+    <a href="{% url 'mentor_create' %}">Create Mentor Profile</a>
+    <hr>
+    {% for mentor in mentors %}
+        <div>
+            <h2>{{ mentor.user.get_full_name|default:mentor.user.username }}</h2>
+            <p><strong>Career Field:</strong> {{ mentor.career_field }}</p>
+            <p><strong>Expertise:</strong> {{ mentor.expertise }}</p>
+            <a href="{% url 'mentor_detail' mentor.id %}">View Profile</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No mentors are currently available.</p>
+    {% endfor %}
+</body>
+</html>
