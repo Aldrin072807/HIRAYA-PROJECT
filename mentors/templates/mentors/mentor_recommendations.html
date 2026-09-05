@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Recommended Mentors</title></head>
+<body>
+    <h1>Recommended Mentors</h1>
+    <p>Based on your skills and career interests, here are your recommended mentors.</p>
+
+    {% for item in recommendations %}
+        <div>
+            <h2>{{ item.mentor.user.get_full_name|default:item.mentor.user.username }}</h2>
+            <p><strong>Career Field:</strong> {{ item.mentor.career_field }}</p>
+            <p><strong>Expertise:</strong> {{ item.mentor.expertise }}</p>
+            <p><strong>Match:</strong> {{ item.score }}%</p>
+            <a href="{% url 'mentor_detail' item.mentor.id %}">View Mentor Profile</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No mentors are currently available.</p>
+    {% endfor %}
+
+    <a href="{% url 'mentor_list' %}">View All Mentors</a>
+</body>
+</html>
