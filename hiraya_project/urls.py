@@ -7,4 +7,5 @@ urlpatterns = [
     path('', start_interview, name='home'),
     path('profiles/', include('profiles.urls')),
     path('interviews/', include('interviews.urls')),
+     path('jobs/', include('jobs.urls')),
 ]
