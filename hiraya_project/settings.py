@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mentors',
     'landing',
     'profiles',
+    'interviews',
 ]
 
 MIDDLEWARE = [
