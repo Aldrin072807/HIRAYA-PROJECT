@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ job.title }}</title>
+</head>
+<body>
+    <p><a href="{% url 'jobs:job_list' %}">← Back to Job Listings</a></p>
+
+    <h1>{{ job.title }}</h1>
+    <h3>{{ job.company }} — {{ job.location }}</h3>
+    <p>{{ job.description }}</p>
+    <p><small>Posted: {{ job.posted_at }}</small></p>
+
+    {% if user.is_authenticated %}
+        {% if already_applied %}
+            <p><strong>You've already applied to this job.</strong></p>
+        {% else %}
+            <form method="post" action="{% url 'jobs:apply_to_job' job.id %}">
+                {% csrf_token %}
+                <button type="submit">Apply Now</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p>You must be logged in to apply.</p>
+    {% endif %}
+</body>
+</html>
