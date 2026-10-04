@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | HIRAYA</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 3rem 1rem;
+            margin: 0;
+        }
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .item-card {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-card h3 {
+            margin: 0 0 0.4rem 0;
+            font-size: 1.1rem;
+        }
+        .meta-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-pending { background-color: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .badge-accepted { background-color: rgba(52, 211, 153, 0.15); color: #34d399; }
+        .badge-rejected { background-color: rgba(248, 113, 113, 0.15); color: #f87171; }
+        .empty-text {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'jobs:job_list' %}" class="back-link">← Back to Job Listings</a>
+        <h1>My Applications</h1>
+
+        {% if applications %}
+            {% for app in applications %}
+                <div class="item-card">
+                    <div>
+                        <h3>{{ app.job.title }}</h3>
+                        <div class="meta-text">{{ app.job.company }} &bull; Applied {{ app.applied_at|date:"M d, Y" }}</div>
+                    </div>
+                    <span class="badge badge-{{ app.status }}">{{ app.get_status_display }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">You haven't applied to any jobs yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Jobs | HIRAYA</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-hover: #0284c7;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 3rem 1rem;
+            margin: 0;
+        }
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        .btn-link {
+            background-color: var(--accent-blue);
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+        .btn-link:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+        }
+        .item-card {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-card h3 {
+            margin: 0 0 0.4rem 0;
+            font-size: 1.2rem;
+        }
+        .item-card h3 a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        .item-card h3 a:hover {
+            text-decoration: underline;
+        }
+        .meta-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .empty-text {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-meta">
+            <h1>Available Jobs</h1>
+            <a href="{% url 'jobs:application_history' %}" class="btn-link">View My Applications</a>
+        </div>
+
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="item-card">
+                    <div>
+                        <h3><a href="{% url 'jobs:job_detail' job.id %}">{{ job.title }}</a></h3>
+                        <div class="meta-text">{{ job.company }} — {{ job.location|default:"Remote" }}</div>
+                    </div>
+                    <a href="{% url 'jobs:job_detail' job.id %}" class="btn-link">View Details</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-text">No job listings available right now.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
