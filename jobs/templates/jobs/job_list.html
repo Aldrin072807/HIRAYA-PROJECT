@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Listings</title>
+</head>
+<body>
+    <h1>Available Jobs</h1>
+
+    <p><a href="{% url 'jobs:application_history' %}">View My Applications</a></p>
+
+    {% if jobs %}
+        <ul>
+            {% for job in jobs %}
+                <li>
+                    <a href="{% url 'jobs:job_detail' job.id %}">{{ job.title }}</a>
+                    — {{ job.company }} ({{ job.location }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No job listings available right now.</p>
+    {% endif %}
+</body>
+</html>

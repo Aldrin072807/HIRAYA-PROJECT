@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Applications</title>
+</head>
+<body>
+    <p><a href="{% url 'jobs:job_list' %}">← Back to Job Listings</a></p>
+
+    <h1>My Applications</h1>
+
+    {% if applications %}
+        <ul>
+            {% for app in applications %}
+                <li>
+                    {{ app.job.title }} at {{ app.job.company }}
+                    — Status: <strong>{{ app.get_status_display }}</strong>
+                    (Applied {{ app.applied_at }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't applied to any jobs yet.</p>
+    {% endif %}
+</body>
+</html>
