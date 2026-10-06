@@ -95,8 +95,12 @@
         <div class="header-meta">
             <h1>Mentors</h1>
             <div class="nav-actions">
-                <a href="{% url 'mentor_recommendations' %}" class="btn-link">View Matches</a>
-                <a href="{% url 'mentor_create' %}" class="btn-link">Become a Mentor</a>
+                {% if user.is_staff or user.is_superuser %}
+                    <a href="{% url 'add_mentor' %}" class="btn-link">+ Add Mentor</a>
+                    <a href="{% url 'profiles:admin_dashboard' %}" class="btn-link">Control Board</a>
+                {% else %}
+                    <a href="{% url 'profiles:dashboard' %}" class="btn-link">Dashboard</a>
+                {% endif %}
             </div>
         </div>
 
@@ -104,9 +108,19 @@
             {% for mentor in mentors %}
                 <div class="item-card">
                     <div>
-                        <h3>{{ mentor.user.get_full_name|default:mentor.user.username }}</h3>
-                        <div class="meta-text"><strong>Field:</strong> {{ mentor.career_field }}</div>
-                        <div class="meta-text"><strong>Expertise:</strong> {{ mentor.expertise }}</div>
+                        <h3>
+                            {% if mentor.user %}
+                                {{ mentor.user.get_full_name|default:mentor.user.username }}
+                            {% else %}
+                                {{ mentor.name|default:"Anonymous Mentor" }}
+                            {% endif %}
+                        </h3>
+                        {% if mentor.career_field %}
+                            <div class="meta-text"><strong>Field:</strong> {{ mentor.career_field }}</div>
+                        {% endif %}
+                        {% if mentor.expertise or mentor.skills %}
+                            <div class="meta-text"><strong>Expertise:</strong> {{ mentor.expertise|default:mentor.skills }}</div>
+                        {% endif %}
                     </div>
                     <a href="{% url 'mentor_detail' mentor.id %}" class="btn-link">View Profile</a>
                 </div>

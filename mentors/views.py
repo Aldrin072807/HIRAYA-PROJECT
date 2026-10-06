@@ -1,46 +1,35 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import MentorProfile
-from .forms import MentorProfileForm
-from profiles.models import UserProfile
-from .matching import calculate_match
-
+from .forms import MentorForm
 
 def mentor_list(request):
-    mentors = MentorProfile.objects.select_related("user").all()
-    return render(request, "mentors/mentor_list.html", {"mentors": mentors})
-
+    """Displays all mentor profiles."""
+    mentors = MentorProfile.objects.all()
+    return render(request, 'mentors/mentor_list.html', {'mentors': mentors})
 
 def mentor_detail(request, id):
-    mentor = get_object_or_404(MentorProfile.objects.select_related("user"), id=id)
-    return render(request, "mentors/mentor_detail.html", {"mentor": mentor})
+    """Displays a single mentor profile."""
+    mentor = get_object_or_404(MentorProfile, id=id)
+    return render(request, 'mentors/mentor_detail.html', {'mentor': mentor})
 
-
-@login_required
-def mentor_create(request):
-    if request.method == "POST":
-        form = MentorProfileForm(request.POST)
+@staff_member_required
+def add_mentor(request):
+    """Staff-only view to create a new mentor entry from the custom dashboard."""
+    if request.method == 'POST':
+        form = MentorForm(request.POST)
         if form.is_valid():
-            mentor = form.save(commit=False)
-            mentor.user = request.user
-            mentor.save()
-            return redirect("mentor_detail", id=mentor.id)
+            form.save()
+            return redirect('profiles:admin_dashboard')
     else:
-        form = MentorProfileForm()
-    return render(request, "mentors/mentor_form.html", {"form": form})
+        form = MentorForm()
+    return render(request, 'mentors/mentor_form.html', {'form': form, 'title': 'Add Mentor Profile'})
 
-@login_required
-def mentor_recommendations(request):
-    user_profile = get_object_or_404(UserProfile, user=request.user)
-    mentors = MentorProfile.objects.select_related("user").all()
-
-    recommendations = []
-    for mentor in mentors:
-        score = calculate_match(user_profile, mentor)
-        recommendations.append({"mentor": mentor, "score": score})
-
-    recommendations.sort(key=lambda item: item["score"], reverse=True)
-
-    return render(request, "mentors/mentor_recommendations.html", {
-        "recommendations": recommendations
-    })
+@staff_member_required
+def delete_mentor(request, pk):
+    """Staff-only view to remove a mentor entry."""
+    mentor = get_object_or_404(MentorProfile, pk=pk)
+    if request.method == 'POST':
+        mentor.delete()
+        return redirect('profiles:admin_dashboard')
+    return render(request, 'jobs/job_confirm_delete.html', {'object': mentor})
