@@ -1,159 +1,499 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Question {{ question.id }} | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
+        * {
+            box-sizing: border-box;
         }
+
+        :root {
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --border: rgba(59, 42, 32, 0.15);
+            --timer-red: #a64b42;
+        }
+
+        html,
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+        }
+
+        /* NAVBAR */
+
+        header {
+            width: 100%;
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            transition: color 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .active-link {
+            color: var(--gold) !important;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            display: block;
+            width: 205px;
+            height: 68px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+        /* MAIN */
+
+        main {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            padding: 55px 20px;
         }
+
         .container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 650px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 760px;
+            padding: 38px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 12px 35px rgba(59, 42, 32, 0.09);
         }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        /* TOP INFO */
+
         .header-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
         }
+
         .badge {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--accent-blue);
-            padding: 0.3rem 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 13px;
+            background: rgba(201, 151, 80, 0.12);
+            border: 1px solid rgba(201, 151, 80, 0.30);
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
+
         .timer {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #f43f5e;
+            color: var(--timer-red);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
         }
-        .btn-link {
-            background-color: var(--accent-blue);
-            color: #0f172a;
+
+        .back-link {
+            color: var(--brown);
+            font-size: 0.68rem;
             font-weight: 600;
             text-decoration: none;
-            padding: 0.4rem 0.9rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            transition: background-color 0.2s ease;
+            transition: color 0.25s ease;
         }
-        .btn-link:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
+
+        .back-link:hover {
+            color: var(--gold);
         }
+
+        /* QUESTION */
+
+        .question-label {
+            margin-bottom: 7px;
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
         .question-text {
-            font-size: 1.25rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
+            margin-bottom: 27px;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.85rem;
+            font-weight: 600;
+            line-height: 1.35;
         }
+
+        /* ANSWER */
+
+        .answer-label {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--brown);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
         textarea {
             width: 100%;
-            height: 150px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
-            padding: 1rem;
-            font-size: 1rem;
-            box-sizing: border-box;
+            min-height: 180px;
+            padding: 16px;
+            background: var(--light-cream);
+            border: 1px solid rgba(59, 42, 32, 0.20);
+            border-radius: 5px;
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.8rem;
+            line-height: 1.7;
             resize: vertical;
-            margin-bottom: 1.5rem;
+            transition: all 0.25s ease;
         }
+
+        textarea::placeholder {
+            color: #9a8c82;
+        }
+
         textarea:focus {
             outline: none;
-            border-color: var(--accent-blue);
+            background: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 151, 80, 0.10);
         }
+
+        .answer-note {
+            margin: 8px 0 22px;
+            color: var(--light-brown);
+            font-size: 0.65rem;
+            line-height: 1.6;
+        }
+
+        /* BUTTON */
+
         .btn {
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
             width: 100%;
+            min-height: 46px;
+            padding: 12px 20px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
         }
+
         .btn:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
+            background: var(--cream);
+            border-color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            width: 100%;
+            padding: 25px 20px;
+            background: var(--navbar-cream);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            margin: 0;
+            color: var(--dark-brown);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 750px) {
+            header {
+                flex-wrap: wrap;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 8px;
+                gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            .logo-link {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-logo {
+                width: 155px;
+            }
+
+            main {
+                padding: 35px 17px;
+            }
+
+            .container {
+                padding: 30px 22px;
+            }
+
+            .header-meta {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .question-text {
+                font-size: 1.55rem;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header-meta">
-            <span class="badge">{{ question.category|default:"General" }}</span>
-            <span class="timer" id="timer">Time Remaining: 02:00</span>
-            <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}" class="btn-link">&larr; Back to Dashboard</a>
-        </div>
-        
-        <div class="question-text">
-            {{ question.text }}
+
+    <!-- NAVBAR -->
+    <header>
+
+        <nav>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'jobs:job_list' %}">
+                Jobs
+            </a>
+
+            <a href="{% url 'mentor_list' %}">
+                Mentors
+            </a>
+
+            <a href="{% url 'interviews:start_interview' %}" class="active-link">
+                Mock Interviews
+            </a>
+
+        </nav>
+
+
+        <a href="{% url 'home' %}" class="logo-link">
+
+            <img
+                src="{% static 'assets/img/hiraya-logo.png' %}"
+                alt="HIRAYA"
+                class="navbar-logo"
+            >
+
+        </a>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="container">
+
+            <!-- QUESTION INFORMATION -->
+            <div class="header-meta">
+
+                <span class="badge">
+                    {{ question.category|default:"General" }}
+                </span>
+
+
+                <span class="timer" id="timer">
+                    Time Remaining: 02:00
+                </span>
+
+
+                <a
+                    href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}"
+                    class="back-link"
+                >
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+
+            <!-- QUESTION -->
+            <div class="question-label">
+                Interview Question
+            </div>
+
+            <div class="question-text">
+                {{ question.text }}
+            </div>
+
+
+            <!-- ANSWER FORM -->
+            <form id="interview-form" method="POST">
+
+                {% csrf_token %}
+
+                <label for="answer" class="answer-label">
+                    Your Answer
+                </label>
+
+                <textarea
+                    id="answer"
+                    name="answer"
+                    placeholder="Type your detailed answer here..."
+                    required
+                ></textarea>
+
+                <div class="answer-note">
+                    Your answer will automatically be submitted when the timer reaches zero.
+                </div>
+
+                <button type="submit" class="btn">
+                    Submit Answer
+                </button>
+
+            </form>
+
         </div>
 
-        <form id="interview-form" method="POST">
-            {% csrf_token %}
-            <textarea name="answer" placeholder="Type your detailed answer here..." required></textarea>
-            <button type="submit" class="btn">Submit Answer</button>
-        </form>
-    </div>
+    </main>
 
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p class="footer-text">
+            © 2026 HIRAYA. Holy Angel University.
+        </p>
+
+    </footer>
+
+
+    <!-- ORIGINAL TIMER FUNCTION -->
     <script>
-        let timeRemaining = 120; 
+        let timeRemaining = 120;
+
         const timerDisplay = document.getElementById('timer');
         const form = document.getElementById('interview-form');
 
         const countdown = setInterval(() => {
+
             let minutes = Math.floor(timeRemaining / 60);
             let seconds = timeRemaining % 60;
 
             minutes = minutes < 10 ? '0' + minutes : minutes;
             seconds = seconds < 10 ? '0' + seconds : seconds;
 
-            timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds}`;
+            timerDisplay.textContent =
+                `Time Remaining: ${minutes}:${seconds}`;
 
             if (timeRemaining <= 0) {
+
                 clearInterval(countdown);
-                const textarea = document.querySelector('textarea[name="answer"]');
-                if (textarea) textarea.removeAttribute('required');
+
+                const textarea =
+                    document.querySelector('textarea[name="answer"]');
+
+                if (textarea) {
+                    textarea.removeAttribute('required');
+                }
+
                 form.submit();
             }
 
             timeRemaining--;
+
         }, 1000);
     </script>
+
 </body>
 </html>

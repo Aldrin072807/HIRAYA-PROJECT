@@ -1,104 +1,617 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Recommended Mentors | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --light-gold: #e7bd80;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --border: rgba(59, 42, 32, 0.15);
         }
+
+        html,
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 3rem 1rem;
             margin: 0;
+            padding: 0;
+            min-height: 100%;
         }
-        .container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 750px;
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+        }
+
+        /* NAVBAR */
+
+        header {
             width: 100%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-        .header-meta {
+            min-height: 82px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
         }
-        h1 { margin: 0; font-size: 1.8rem; }
-        .btn-link {
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--dark-brown);
             text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: background-color 0.2s ease;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            transition: color 0.25s ease;
         }
-        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
-        .item-card {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .active-link {
+            color: var(--gold) !important;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            display: block;
+            width: 205px;
+            height: 68px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+        /* MAIN */
+
+        main {
+            flex: 1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 55px 0 70px;
+        }
+
+        /* PAGE HEADER */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 25px;
+            margin-bottom: 32px;
+        }
+
+        .page-label {
+            margin-bottom: 5px;
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+        }
+
+        .page-description {
+            max-width: 560px;
+            margin: 7px 0 0;
+            color: var(--light-brown);
+            font-size: 0.8rem;
+            line-height: 1.7;
+        }
+
+        /* BUTTON */
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 11px 18px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-link:hover {
+            background: var(--cream);
+            border-color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: rgba(59, 42, 32, 0.25);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navbar-cream);
+            border-color: var(--navbar-cream);
+        }
+
+        /* RECOMMENDATIONS */
+
+        .recommendations-container {
+            padding: 30px;
+            background: var(--white);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.06);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+
+        .section-line {
+            width: 35px;
+            height: 2px;
+            margin-left: 15px;
+            background: var(--gold);
+        }
+
+        .recommendation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* MENTOR CARD */
+
+        .item-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 25px;
+            padding: 23px;
+            background: var(--light-cream);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
         }
-        .item-card h3 { margin: 0 0 0.4rem 0; font-size: 1.2rem; color: var(--accent-blue); }
-        .meta-text { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
-        .empty-text { color: var(--text-muted); text-align: center; padding: 2rem 0; }
+
+        .item-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(201, 151, 80, 0.45);
+            box-shadow: 0 7px 18px rgba(59, 42, 32, 0.07);
+        }
+
+        .mentor-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-width: 0;
+        }
+
+        .mentor-icon {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 151, 80, 0.13);
+            border: 1px solid rgba(201, 151, 80, 0.28);
+            border-radius: 50%;
+            color: var(--gold);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .mentor-details {
+            min-width: 0;
+        }
+
+        .item-card h3 {
+            margin: 0 0 8px;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.45rem;
+            font-weight: 600;
+        }
+
+        .meta-text {
+            margin-top: 4px;
+            color: var(--light-brown);
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .meta-text strong {
+            color: var(--brown);
+            font-weight: 600;
+        }
+
+        .view-profile {
+            flex-shrink: 0;
+        }
+
+        /* EMPTY STATE */
+
+        .empty-state {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            background: rgba(201, 151, 80, 0.12);
+            border: 1px solid rgba(201, 151, 80, 0.25);
+            border-radius: 50%;
+            color: var(--gold);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 7px;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .empty-text {
+            margin: 0;
+            color: var(--light-brown);
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            width: 100%;
+            padding: 25px 20px;
+            background: var(--navbar-cream);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            margin: 0;
+            color: var(--dark-brown);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+            header {
+                flex-wrap: wrap;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 8px;
+            }
+
+            .logo-link {
+                margin-left: auto;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-logo {
+                width: 155px;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 35px;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .recommendations-container {
+                padding: 20px;
+            }
+
+            .item-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .mentor-info {
+                align-items: flex-start;
+            }
+
+            .view-profile {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header-meta">
-            <h1>Recommended Mentors</h1>
-            <a href="{% url dashboard_url %}" class="btn-link">&larr; Back to Dashboard</a>
+
+    <!-- NAVBAR -->
+    <header>
+
+        <nav>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url dashboard_url %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'jobs:job_list' %}">
+                Jobs
+            </a>
+
+            <a href="{% url 'mentor_list' %}" class="active-link">
+                Mentors
+            </a>
+
+            <a href="{% url 'interviews:start_interview' %}">
+                Mock Interviews
+            </a>
+
+        </nav>
+
+        <a href="{% url 'home' %}" class="logo-link">
+
+            <img
+                src="{% static 'assets/img/hiraya-logo.png' %}"
+                alt="HIRAYA"
+                class="navbar-logo"
+            >
+
+        </a>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="container">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <div class="page-label">
+                        Personalized Guidance
+                    </div>
+
+                    <h1>Recommended Mentors</h1>
+
+                    <p class="page-description">
+                        Explore mentors recommended based on your
+                        interests, skills, and career direction.
+                    </p>
+
+                </div>
+
+
+                <a href="{% url dashboard_url %}"
+                   class="btn-link btn-secondary">
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+
+            <!-- RECOMMENDATIONS -->
+            <div class="recommendations-container">
+
+                <div class="section-header">
+
+                    <h2>Your Recommendations</h2>
+
+                    <div class="section-line"></div>
+
+                </div>
+
+
+                {% if recommendations %}
+
+                    <div class="recommendation-list">
+
+                        {% for mentor in recommendations %}
+
+                            <div class="item-card">
+
+                                <div class="mentor-info">
+
+                                    <div class="mentor-icon">
+                                        M
+                                    </div>
+
+
+                                    <div class="mentor-details">
+
+                                        <h3>
+
+                                            {% if mentor.user %}
+
+                                                {{ mentor.user.get_full_name|default:mentor.user.username }}
+
+                                            {% else %}
+
+                                                {{ mentor.name|default:"Recommended Mentor" }}
+
+                                            {% endif %}
+
+                                        </h3>
+
+
+                                        {% if mentor.career_field %}
+
+                                            <div class="meta-text">
+
+                                                <strong>Field:</strong>
+
+                                                {{ mentor.career_field }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if mentor.expertise or mentor.skills %}
+
+                                            <div class="meta-text">
+
+                                                <strong>Expertise:</strong>
+
+                                                {{ mentor.expertise|default:mentor.skills }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+
+                                <a
+                                    href="{% url 'mentor_detail' mentor.id %}"
+                                    class="btn-link view-profile"
+                                >
+                                    View Profile
+                                </a>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            M
+                        </div>
+
+                        <h3>No Recommendations Yet</h3>
+
+                        <p class="empty-text">
+                            No mentor recommendations are available
+                            at this time.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
         </div>
 
-        {% if recommendations %}
-            {% for mentor in recommendations %}
-                <div class="item-card">
-                    <div>
-                        <h3>
-                            {% if mentor.user %}
-                                {{ mentor.user.get_full_name|default:mentor.user.username }}
-                            {% else %}
-                                {{ mentor.name|default:"Recommended Mentor" }}
-                            {% endif %}
-                        </h3>
-                        {% if mentor.career_field %}
-                            <div class="meta-text"><strong>Field:</strong> {{ mentor.career_field }}</div>
-                        {% endif %}
-                        {% if mentor.expertise or mentor.skills %}
-                            <div class="meta-text"><strong>Expertise:</strong> {{ mentor.expertise|default:mentor.skills }}</div>
-                        {% endif %}
-                    </div>
-                    <a href="{% url 'mentor_detail' mentor.id %}" class="btn-link">View Profile</a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p class="empty-text">No mentor recommendations available at this time.</p>
-        {% endif %}
-    </div>
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p class="footer-text">
+            © 2026 HIRAYA. Holy Angel University.
+        </p>
+
+    </footer>
+
 </body>
 </html>

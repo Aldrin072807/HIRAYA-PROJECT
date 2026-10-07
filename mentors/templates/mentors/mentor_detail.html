@@ -1,106 +1,607 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mentor Detail | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --light-gold: #e7bd80;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --border: rgba(59, 42, 32, 0.15);
         }
+
+        html,
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 3rem 1rem;
             margin: 0;
+            padding: 0;
+            min-height: 100%;
         }
-        .container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 750px;
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+        }
+
+        /* NAVBAR */
+
+        header {
             width: 100%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
         }
-        .header-meta {
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            transition: color 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .active-link {
+            color: var(--gold) !important;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            display: block;
+            width: 205px;
+            height: 68px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+        /* MAIN */
+
+        main {
+            flex: 1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 55px 0 70px;
+        }
+
+        /* TOP NAVIGATION */
+
+        .top-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 15px;
+            margin-bottom: 25px;
         }
-        h1 { margin: 0; font-size: 1.8rem; }
-        .nav-actions { display: flex; gap: 0.8rem; }
-        .btn-link {
-            background-color: var(--accent-blue);
-            color: #0f172a;
+
+        .back-link {
+            color: var(--brown);
+            font-size: 0.72rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
             text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: background-color 0.2s ease;
+            transition: color 0.25s ease;
         }
-        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
-        .detail-section { margin-bottom: 1.5rem; line-height: 1.6; }
-        .detail-section label { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 0.3rem; }
+
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* BUTTONS */
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 11px 18px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-link:hover {
+            background: var(--cream);
+            border-color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: rgba(59, 42, 32, 0.25);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navbar-cream);
+            border-color: var(--navbar-cream);
+        }
+
+        /* MENTOR PROFILE */
+
+        .mentor-card {
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.07);
+        }
+
+        .mentor-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 38px 40px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mentor-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .mentor-avatar {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 151, 80, 0.13);
+            border: 1px solid rgba(201, 151, 80, 0.30);
+            border-radius: 50%;
+            color: var(--gold);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .page-label {
+            margin-bottom: 5px;
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .mentor-header h1 {
+            margin: 0;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .mentor-subtitle {
+            margin-top: 7px;
+            color: var(--light-brown);
+            font-size: 0.8rem;
+        }
+
+        /* DETAILS */
+
+        .mentor-content {
+            padding: 35px 40px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 17px;
+        }
+
+        .detail-section {
+            padding: 20px;
+            background: var(--light-cream);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+
+        .detail-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            color: var(--dark-brown);
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+
+        /* BIO */
+
+        .bio-section {
+            margin-top: 28px;
+            padding-top: 27px;
+            border-top: 1px solid var(--border);
+        }
+
+        .bio-section h2 {
+            margin: 0 0 14px;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+
+        .bio-text {
+            margin: 0;
+            color: var(--brown);
+            font-size: 0.82rem;
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        /* CONTACT */
+
+        .contact-section {
+            margin-top: 30px;
+            padding: 22px 25px;
+            background: var(--navbar-cream);
+            border-radius: 6px;
+        }
+
+        .contact-label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--gold);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .contact-email {
+            color: var(--dark-brown);
+            font-size: 0.82rem;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        /* FOOTER */
+
+        footer {
+            width: 100%;
+            padding: 25px 20px;
+            background: var(--navbar-cream);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            margin: 0;
+            color: var(--dark-brown);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 750px) {
+            header {
+                flex-wrap: wrap;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 8px;
+            }
+
+            .logo-link {
+                margin-left: auto;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .navbar-logo {
+                width: 155px;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 35px;
+            }
+
+            .top-actions {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .mentor-header {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 30px 25px;
+            }
+
+            .mentor-header h1 {
+                font-size: 2.1rem;
+            }
+
+            .mentor-content {
+                padding: 30px 25px;
+            }
+
+            .nav-actions {
+                width: 100%;
+            }
+
+            .nav-actions .btn-link {
+                flex: 1;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header-meta">
-            <h1>
-                {% if mentor.user %}
-                    {{ mentor.user.get_full_name|default:mentor.user.username }}
-                {% else %}
-                    {{ mentor.name|default:"Mentor Profile" }}
-                {% endif %}
-            </h1>
-            <div class="nav-actions">
-                <a href="{% url 'mentor_list' %}" class="btn-link">All Mentors</a>
-                <a href="{% url dashboard_url %}" class="btn-link">&larr; Back to Dashboard</a>
+
+    <!-- NAVBAR -->
+    <header>
+
+        <nav>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url dashboard_url %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'jobs:job_list' %}">
+                Jobs
+            </a>
+
+            <a href="{% url 'mentor_list' %}" class="active-link">
+                Mentors
+            </a>
+
+            <a href="{% url 'interviews:start_interview' %}">
+                Mock Interviews
+            </a>
+        </nav>
+
+        <a href="{% url 'home' %}" class="logo-link">
+            <img
+                src="{% static 'assets/img/hiraya-logo.png' %}"
+                alt="HIRAYA"
+                class="navbar-logo"
+            >
+        </a>
+
+    </header>
+
+
+    <main>
+
+        <div class="container">
+
+            <!-- TOP ACTIONS -->
+            <div class="top-actions">
+
+                <a href="{% url 'mentor_list' %}" class="back-link">
+                    ← Back to Mentors
+                </a>
+
+                <div class="nav-actions">
+
+                    <a href="{% url 'mentor_list' %}"
+                       class="btn-link btn-secondary">
+                        All Mentors
+                    </a>
+
+                    <a href="{% url dashboard_url %}"
+                       class="btn-link btn-secondary">
+                        Dashboard
+                    </a>
+
+                </div>
+
             </div>
+
+
+            <!-- MENTOR PROFILE -->
+            <div class="mentor-card">
+
+                <div class="mentor-header">
+
+                    <div class="mentor-avatar">
+                        M
+                    </div>
+
+                    <div>
+
+                        <div class="page-label">
+                            Mentor Profile
+                        </div>
+
+                        <h1>
+                            {% if mentor.user %}
+                                {{ mentor.user.get_full_name|default:mentor.user.username }}
+                            {% else %}
+                                {{ mentor.name|default:"Mentor Profile" }}
+                            {% endif %}
+                        </h1>
+
+                        {% if mentor.career_field %}
+                            <div class="mentor-subtitle">
+                                {{ mentor.career_field }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="mentor-content">
+
+                    <!-- FIELD + EXPERTISE -->
+                    <div class="details-grid">
+
+                        {% if mentor.career_field %}
+
+                            <div class="detail-section">
+
+                                <label>Career Field</label>
+
+                                <div class="detail-value">
+                                    {{ mentor.career_field }}
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if mentor.expertise or mentor.skills %}
+
+                            <div class="detail-section">
+
+                                <label>Expertise & Skills</label>
+
+                                <div class="detail-value">
+                                    {{ mentor.expertise|default:mentor.skills }}
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- BIO -->
+                    {% if mentor.bio %}
+
+                        <div class="bio-section">
+
+                            <h2>About the Mentor</h2>
+
+                            <p class="bio-text">
+                                {{ mentor.bio }}
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- EMAIL -->
+                    {% if mentor.email %}
+
+                        <div class="contact-section">
+
+                            <span class="contact-label">
+                                Contact Email
+                            </span>
+
+                            <div class="contact-email">
+                                {{ mentor.email }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
         </div>
 
-        {% if mentor.career_field %}
-        <div class="detail-section">
-            <label>Field</label>
-            <div>{{ mentor.career_field }}</div>
-        </div>
-        {% endif %}
+    </main>
 
-        {% if mentor.expertise or mentor.skills %}
-        <div class="detail-section">
-            <label>Expertise & Skills</label>
-            <div>{{ mentor.expertise|default:mentor.skills }}</div>
-        </div>
-        {% endif %}
 
-        {% if mentor.bio %}
-        <div class="detail-section">
-            <label>Bio</label>
-            <div>{{ mentor.bio }}</div>
-        </div>
-        {% endif %}
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-text">
+            © 2026 HIRAYA. Holy Angel University.
+        </p>
+    </footer>
 
-        {% if mentor.email %}
-        <div class="detail-section">
-            <label>Contact Email</label>
-            <div>{{ mentor.email }}</div>
-        </div>
-        {% endif %}
-    </div>
 </body>
 </html>
