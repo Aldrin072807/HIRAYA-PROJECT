@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,33 +14,22 @@
           rel="stylesheet">
 
     <style>
-
-        /* =========================================
-           HIRAYA COLORS
-        ========================================== */
-
         :root {
             --dark-brown: #3b2a20;
             --brown: #574235;
             --light-brown: #76675d;
-
             --gold: #c99750;
             --light-gold: #e7bd80;
-
             --cream: #ead0aa;
             --navbar-cream: #f3e3cc;
             --light-cream: #fbf5ec;
-
             --white: #fffaf4;
-
             --error-red: #b94a48;
         }
-
 
         * {
             box-sizing: border-box;
         }
-
 
         html,
         body {
@@ -47,12 +37,9 @@
             min-height: 100%;
         }
 
-
         body {
             font-family: "Montserrat", sans-serif;
-
             min-height: 100vh;
-
             display: flex;
             flex-direction: column;
 
@@ -71,579 +58,513 @@
             background-attachment: fixed;
         }
 
-
-
-        /* =========================================
-           NAVBAR
-        ========================================== */
+        /* NAVBAR */
 
         .navbar {
             width: 100%;
             height: 78px;
-
             display: flex;
             align-items: center;
-
             padding: 0 6%;
-
             background: var(--navbar-cream);
-
             border-bottom: 1px solid rgba(59, 42, 32, 0.15);
-
             box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
-
             position: relative;
             z-index: 10;
         }
 
-
         .back-home {
             color: var(--dark-brown);
-
             font-size: 0.78rem;
             font-weight: 600;
-
             letter-spacing: 1.5px;
-
             text-decoration: none;
-
             transition: 0.25s ease;
         }
-
 
         .back-home:hover {
             color: var(--gold);
         }
 
-
         .logo-link {
             margin-left: auto;
-
             display: flex;
             align-items: center;
-
             text-decoration: none;
         }
 
-
         .navbar-logo {
             display: block;
-
             width: 220px;
             height: 68px;
-
             object-fit: contain;
-
             transition: 0.3s ease;
         }
-
 
         .navbar-logo:hover {
             transform: scale(1.03);
         }
 
-
-
-        /* =========================================
-           REGISTER AREA
-        ========================================== */
+        /* REGISTER AREA */
 
         .register-wrapper {
             flex: 1;
-
             width: 100%;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             padding: 50px 20px;
         }
 
-
-
-        /* =========================================
-           REGISTER CARD
-        ========================================== */
-
         .register-card {
             width: 100%;
-
-            max-width: 440px;
-
+            max-width: 650px;
             padding: 42px;
-
             background: rgba(255, 250, 244, 0.96);
-
             border: 1px solid rgba(59, 42, 32, 0.12);
-
             border-radius: 8px;
-
             box-shadow: 0 20px 50px rgba(40, 27, 19, 0.25);
         }
 
-
-
-        /* =========================================
-           CARD HEADER
-        ========================================== */
+        /* HEADER */
 
         .card-decoration {
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             gap: 10px;
-
             margin-bottom: 15px;
         }
-
 
         .decoration-line {
             width: 35px;
             height: 1px;
-
             background: var(--gold);
         }
 
-
         .decoration-star {
             color: var(--gold);
-
             font-size: 0.8rem;
         }
 
-
         .register-card h1 {
             margin: 0;
-
             font-family: "Cormorant Garamond", serif;
-
             font-size: 2.6rem;
-
             font-weight: 600;
-
             color: var(--dark-brown);
-
             text-align: center;
         }
-
 
         .register-subtitle {
             margin: 10px 0 30px;
-
             color: var(--light-brown);
-
             font-size: 0.82rem;
-
             line-height: 1.7;
-
             text-align: center;
         }
 
+        /* SECTION TITLES */
 
+        .section-title {
+            margin: 30px 0 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(59, 42, 32, 0.15);
 
-        /* =========================================
-           FORM
-        ========================================== */
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* FORM */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
         .form-group {
             margin-bottom: 19px;
         }
 
-
         label {
             display: block;
-
             margin-bottom: 8px;
-
             color: var(--brown);
-
             font-size: 0.72rem;
-
             font-weight: 600;
-
             letter-spacing: 0.8px;
-
             text-transform: uppercase;
         }
 
-
-
-        /* Django-generated inputs */
-
-        .form-group input {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-
             padding: 13px 14px;
 
             background: var(--white);
-
             border: 1px solid rgba(59, 42, 32, 0.22);
-
             border-radius: 4px;
 
             color: var(--dark-brown);
 
             font-family: "Montserrat", sans-serif;
-
             font-size: 0.86rem;
 
             transition: 0.25s ease;
         }
 
+        .form-group textarea {
+            min-height: 85px;
+            resize: vertical;
+        }
 
-        .form-group input::placeholder {
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
             color: #a79a90;
         }
 
-
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
-
             border-color: var(--gold);
-
             box-shadow: 0 0 0 3px rgba(201, 151, 80, 0.12);
         }
 
-
-
-        /* =========================================
-           ERROR MESSAGE
-        ========================================== */
+        /* ERRORS */
 
         .error-message {
             margin-top: 7px;
-
             color: var(--error-red);
-
             font-size: 0.72rem;
-
             line-height: 1.5;
         }
 
-
-
-        /* =========================================
-           REGISTER BUTTON
-        ========================================== */
+        /* BUTTON */
 
         .register-button {
             width: 100%;
-
-            margin-top: 8px;
-
+            margin-top: 15px;
             padding: 14px 20px;
 
             background: var(--gold);
-
             border: 1px solid var(--gold);
-
             border-radius: 4px;
 
             color: var(--dark-brown);
 
             font-family: "Montserrat", sans-serif;
-
             font-size: 0.76rem;
-
             font-weight: 600;
-
             letter-spacing: 2px;
-
             text-transform: uppercase;
 
             cursor: pointer;
-
             transition: 0.3s ease;
         }
 
-
         .register-button:hover {
             background: var(--cream);
-
             border-color: var(--cream);
-
             transform: translateY(-2px);
         }
 
-
-
-        /* =========================================
-           LOGIN LINK
-        ========================================== */
+        /* LOGIN */
 
         .login-section {
             margin-top: 27px;
-
             padding-top: 23px;
-
             border-top: 1px solid rgba(59, 42, 32, 0.12);
-
             color: var(--light-brown);
-
             font-size: 0.78rem;
-
             text-align: center;
         }
 
-
         .login-section a {
             color: var(--gold);
-
             font-weight: 600;
-
             text-decoration: none;
-
             transition: 0.2s ease;
         }
-
 
         .login-section a:hover {
             color: var(--dark-brown);
         }
 
-
-
-        /* =========================================
-           FOOTER
-        ========================================== */
+        /* FOOTER */
 
         .footer {
             width: 100%;
-
             padding: 18px 20px;
-
             background: var(--navbar-cream);
-
             border-top: 1px solid rgba(59, 42, 32, 0.15);
-
             color: var(--dark-brown);
-
             font-size: 0.68rem;
-
             font-weight: 500;
-
             letter-spacing: 0.5px;
-
             text-align: center;
         }
 
-
-
-        /* =========================================
-           MOBILE
-        ========================================== */
+        /* MOBILE */
 
         @media (max-width: 600px) {
 
             .navbar {
                 height: 70px;
-
                 padding: 0 20px;
             }
-
 
             .navbar-logo {
                 width: 155px;
                 height: 55px;
             }
 
-
             .back-home {
                 font-size: 0.68rem;
             }
-
 
             .register-wrapper {
                 padding: 35px 18px;
             }
 
-
             .register-card {
                 padding: 35px 25px;
             }
-
 
             .register-card h1 {
                 font-size: 2.2rem;
             }
 
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-    <!-- =========================================
-         NAVBAR
-    ========================================== -->
-
+    <!-- NAVBAR -->
     <nav class="navbar">
-
 
         <a href="/" class="back-home">
             ← HOME
         </a>
 
-
         <a href="/" class="logo-link">
-
             <img
-                src="/static/assets/img/hiraya-logo.png"
+                src="{% static 'assets/img/hiraya-logo.png' %}"
                 class="navbar-logo"
                 alt="HIRAYA">
-
         </a>
-
 
     </nav>
 
 
-
-    <!-- =========================================
-         REGISTER AREA
-    ========================================== -->
-
+    <!-- REGISTER AREA -->
     <main class="register-wrapper">
-
 
         <div class="register-card">
 
-
-            <!-- DECORATION -->
-
             <div class="card-decoration">
-
                 <div class="decoration-line"></div>
-
-                <span class="decoration-star">
-                    ✦
-                </span>
-
+                <span class="decoration-star">✦</span>
                 <div class="decoration-line"></div>
-
             </div>
 
-
-
-            <!-- TITLE -->
-
-            <h1>
-                Create an Account
-            </h1>
-
+            <h1>Create an Account</h1>
 
             <p class="register-subtitle">
-                Create your HIRAYA account to get started.
+                Create your HIRAYA account and career profile to get started.
             </p>
 
 
-
-            <!-- REGISTER FORM -->
-
-            <form
-                method="POST"
-                action="{% url 'profiles:register' %}">
-
+            <form method="POST" action="{% url 'profiles:register' %}">
 
                 {% csrf_token %}
 
 
+                <!-- PERSONAL INFORMATION -->
 
-                <!-- EMAIL -->
+                <div class="section-title">
+                    Personal Information
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="id_first_name">First Name</label>
+                        {{ form.first_name }}
+
+                        {% if form.first_name.errors %}
+                            <div class="error-message">
+                                {{ form.first_name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_last_name">Last Name</label>
+                        {{ form.last_name }}
+
+                        {% if form.last_name.errors %}
+                            <div class="error-message">
+                                {{ form.last_name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
 
                 <div class="form-group">
-
-                    <label for="id_email">
-                        Email Address
-                    </label>
-
-
+                    <label for="id_email">Email Address</label>
                     {{ form.email }}
 
-
                     {% if form.email.errors %}
-
                         <div class="error-message">
                             {{ form.email.errors.0 }}
                         </div>
-
                     {% endif %}
+                </div>
+
+
+                <!-- ACADEMIC INFORMATION -->
+
+                <div class="section-title">
+                    Academic Information
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="id_program">Program / Course</label>
+                        {{ form.program }}
+
+                        {% if form.program.errors %}
+                            <div class="error-message">
+                                {{ form.program.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_year_level">Year Level</label>
+                        {{ form.year_level }}
+
+                        {% if form.year_level.errors %}
+                            <div class="error-message">
+                                {{ form.year_level.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
 
                 </div>
 
 
+                <!-- CAREER PROFILE -->
 
-                <!-- PASSWORD -->
+                <div class="section-title">
+                    Career Profile
+                </div>
 
                 <div class="form-group">
+                    <label for="id_bio">About Me</label>
+                    {{ form.bio }}
 
-                    <label for="id_password">
-                        Password
-                    </label>
+                    {% if form.bio.errors %}
+                        <div class="error-message">
+                            {{ form.bio.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
 
 
+                <div class="form-group">
+                    <label for="id_skills">Skills</label>
+                    {{ form.skills }}
+
+                    {% if form.skills.errors %}
+                        <div class="error-message">
+                            {{ form.skills.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+
+                <div class="form-group">
+                    <label for="id_experience">Experience / Projects</label>
+                    {{ form.experience }}
+
+                    {% if form.experience.errors %}
+                        <div class="error-message">
+                            {{ form.experience.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+
+                <div class="form-group">
+                    <label for="id_career_interests">Career Interests</label>
+                    {{ form.career_interests }}
+
+                    {% if form.career_interests.errors %}
+                        <div class="error-message">
+                            {{ form.career_interests.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+
+
+                <!-- SECURITY -->
+
+                <div class="section-title">
+                    Account Security
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Password</label>
                     {{ form.password }}
 
-
                     {% if form.password.errors %}
-
                         <div class="error-message">
                             {{ form.password.errors.0 }}
                         </div>
-
                     {% endif %}
-
                 </div>
 
 
-
-                <!-- CONFIRM PASSWORD -->
-
                 <div class="form-group">
-
-                    <label for="id_confirm_password">
-                        Confirm Password
-                    </label>
-
-
+                    <label for="id_confirm_password">Confirm Password</label>
                     {{ form.confirm_password }}
 
-
                     {% if form.confirm_password.errors %}
-
                         <div class="error-message">
                             {{ form.confirm_password.errors.0 }}
                         </div>
-
                     {% endif %}
-
                 </div>
 
 
+                {% if form.non_field_errors %}
+                    <div class="error-message">
+                        {{ form.non_field_errors.0 }}
+                    </div>
+                {% endif %}
 
-                <!-- REGISTER BUTTON -->
 
-                <button
-                    type="submit"
-                    class="register-button">
-
+                <button type="submit" class="register-button">
                     Register
-
                 </button>
-
 
             </form>
 
-
-
-            <!-- LOGIN LINK -->
 
             <div class="login-section">
 
@@ -655,25 +576,15 @@
 
             </div>
 
-
         </div>
-
 
     </main>
 
 
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
     <footer class="footer">
-
         Copyright &copy; HIRAYA 2026.
         All rights reserved.
-
     </footer>
-
 
 </body>
 

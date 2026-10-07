@@ -1,0 +1,311 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Applications | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --border: rgba(59, 42, 32, 0.15);
+        }
+
+        body {
+            margin: 0;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+        }
+
+        header {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-link {
+            color: var(--dark-brown);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        .logo {
+            margin-left: auto;
+            width: 190px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        .heading-label {
+            color: var(--gold);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 5px 0 8px;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2.7rem;
+        }
+
+        .subtitle {
+            margin: 0 0 30px;
+            color: var(--light-brown);
+            font-size: 0.82rem;
+        }
+
+        .applications {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .application-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+
+            padding: 22px;
+
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            box-shadow: 0 6px 20px rgba(59, 42, 32, 0.05);
+        }
+
+        .application-main {
+            flex: 1;
+        }
+
+        .applicant-name {
+            margin-bottom: 6px;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .job {
+            color: var(--brown);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .date {
+            margin-top: 5px;
+            color: var(--light-brown);
+            font-size: 0.7rem;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status {
+            padding: 8px 11px;
+            background: rgba(201, 151, 80, 0.13);
+            border: 1px solid rgba(201, 151, 80, 0.35);
+            border-radius: 4px;
+
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .review-button {
+            padding: 10px 16px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+
+            color: var(--dark-brown);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .review-button:hover {
+            background: var(--cream);
+        }
+
+        .empty {
+            padding: 30px;
+            background: var(--white);
+            border: 1px dashed var(--border);
+            border-radius: 7px;
+
+            color: var(--light-brown);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .application-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .logo {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <a href="{% url 'profiles:admin_dashboard' %}"
+       class="back-link">
+        ← ADMIN DASHBOARD
+    </a>
+
+    <img
+        src="{% static 'assets/img/hiraya-logo.png' %}"
+        class="logo"
+        alt="HIRAYA">
+
+</header>
+
+
+<main class="container">
+
+    <div class="heading-label">
+        HIRAYA Administration
+    </div>
+
+    <h1>Job Applications</h1>
+
+    <p class="subtitle">
+        Review student applications and manage their application status.
+    </p>
+
+
+    {% if applications %}
+
+        <div class="applications">
+
+            {% for application in applications %}
+
+                <div class="application-card">
+
+                    <div class="application-main">
+
+                        <div class="applicant-name">
+
+                            {% if application.applicant.first_name or application.applicant.last_name %}
+
+                                {{ application.applicant.first_name }}
+                                {{ application.applicant.last_name }}
+
+                            {% else %}
+
+                                {{ application.applicant.username }}
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="job">
+
+                            Applied for
+
+                            <strong>
+                                {{ application.job.title }}
+                            </strong>
+
+                            at
+
+                            <strong>
+                                {{ application.job.company }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="date">
+                            Applied {{ application.applied_at|date:"M d, Y" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <span class="status">
+                            {{ application.get_status_display }}
+                        </span>
+
+                        <a
+                            href="{% url 'jobs:admin_application_detail' application.id %}"
+                            class="review-button">
+
+                            Review
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+            No applications have been submitted yet.
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>
