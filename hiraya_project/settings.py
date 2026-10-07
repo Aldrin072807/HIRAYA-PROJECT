@@ -120,18 +120,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+
 STATIC_URL = 'static/'
 
-# Tells Django where to look for static folders in your project
+# Option B1: Only add directory if it exists
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    path for path in [BASE_DIR / 'static'] if os.path.exists(path)
 ]
 
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'profiles:dashboard'
 LOGIN_URL = 'profiles:login'
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+import os
+from dotenv import load_dotenv, find_dotenv
+
+# Automatically locate and force-load the .env file regardless of folder depth
+load_dotenv(find_dotenv(), override=True)
+
+# Set API Keys
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
 
 AUTHENTICATION_BACKENDS = [
     'profiles.backends.EmailOrUsernameModelBackend',

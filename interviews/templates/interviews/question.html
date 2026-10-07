@@ -57,6 +57,20 @@
             font-weight: bold;
             color: #f43f5e;
         }
+        .btn-link {
+            background-color: var(--accent-blue);
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease;
+        }
+        .btn-link:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+        }
         .question-text {
             font-size: 1.25rem;
             line-height: 1.5;
@@ -103,6 +117,7 @@
         <div class="header-meta">
             <span class="badge">{{ question.category|default:"General" }}</span>
             <span class="timer" id="timer">Time Remaining: 02:00</span>
+            <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}" class="btn-link">&larr; Back to Dashboard</a>
         </div>
         
         <div class="question-text">
