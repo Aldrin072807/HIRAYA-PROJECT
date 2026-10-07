@@ -120,11 +120,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+
 STATIC_URL = 'static/'
 
-# Tells Django where to look for static folders in your project
+# Option B1: Only add directory if it exists
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    path for path in [BASE_DIR / 'static'] if os.path.exists(path)
 ]
 
 LOGOUT_REDIRECT_URL = 'home'
