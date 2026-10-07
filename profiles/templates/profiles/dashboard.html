@@ -1,261 +1,682 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Student Dashboard | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-gold: #f59e0b;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --light-gold: #e7bd80;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --border: rgba(59, 42, 32, 0.15);
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
         }
+
+        /* =====================
+           NAVBAR
+        ===================== */
 
         header {
+            width: 100%;
+            min-height: 82px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 2.5rem;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--accent-blue);
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
+            position: relative;
+            z-index: 10;
         }
 
         nav {
             display: flex;
             align-items: center;
+            gap: 25px;
         }
 
-        nav a, nav button {
-            color: var(--text-main);
+        nav a,
+        .nav-logout-btn {
+            color: var(--dark-brown);
             text-decoration: none;
-            margin-left: 1.2rem;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            transition: color 0.25s ease;
         }
 
-        nav a:hover, nav button:hover {
-            color: var(--accent-blue);
+        nav a:hover,
+        .nav-logout-btn:hover {
+            color: var(--gold);
         }
 
         .admin-link {
-            color: var(--accent-gold) !important;
-            font-weight: 600;
+            color: var(--gold) !important;
+            font-weight: 700;
         }
 
         .admin-link:hover {
-            color: #fbbf24 !important;
+            color: var(--dark-brown) !important;
+        }
+
+        .nav-logout-form {
+            display: inline;
+            margin: 0;
         }
 
         .nav-logout-btn {
+            padding: 0;
             background: none;
             border: none;
             cursor: pointer;
-            font-family: inherit;
-            padding: 0;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            display: block;
+            width: 205px;
+            height: 68px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+        /* =====================
+           MAIN
+        ===================== */
+
+        main {
+            flex: 1;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 2.5rem auto;
-            padding: 0 1rem;
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 55px 0 70px;
         }
 
+        /* =====================
+           WELCOME
+        ===================== */
+
         .welcome-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
+            padding: 38px 40px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.06);
+        }
+
+        .welcome-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gold);
+        }
+
+        .welcome-label {
+            margin-bottom: 5px;
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .welcome-card h1 {
-            margin: 0 0 0.4rem 0;
-            font-size: 1.8rem;
-            color: var(--accent-blue);
+            margin: 0;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2.6rem;
+            font-weight: 600;
         }
 
         .welcome-card p {
-            margin: 0;
-            color: var(--text-muted);
+            max-width: 650px;
+            margin: 8px 0 0;
+            color: var(--light-brown);
+            font-size: 0.82rem;
+            line-height: 1.7;
         }
+
+        /* =====================
+           FEATURE CARDS
+        ===================== */
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
+            min-height: 260px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            padding: 28px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 13px 30px rgba(59, 42, 32, 0.10);
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            background: rgba(201, 151, 80, 0.13);
+            border: 1px solid rgba(201, 151, 80, 0.25);
+            border-radius: 50%;
+            font-size: 1.15rem;
         }
 
         .card h3 {
-            margin: 0 0 0.8rem 0;
-            font-size: 1.2rem;
-            color: var(--text-main);
+            margin: 0 0 10px;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.55rem;
+            font-weight: 600;
         }
 
         .card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1.2rem;
+            margin: 0 0 25px;
+            color: var(--light-brown);
+            font-size: 0.78rem;
+            line-height: 1.7;
         }
 
         .btn-link {
             display: block;
+            width: 100%;
+            padding: 13px 15px;
+            background: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            color: var(--dark-brown);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
             text-align: center;
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
             text-decoration: none;
-            padding: 0.65rem;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .btn-link:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
+            background: var(--cream);
+            border-color: var(--cream);
+            transform: translateY(-2px);
         }
+
+        /* =====================
+           APPLICATIONS
+        ===================== */
 
         .section-box {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
+            margin-bottom: 28px;
+            padding: 30px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.06);
         }
 
-        .section-box h2 {
-            margin: 0 0 1rem 0;
-            font-size: 1.3rem;
-            color: var(--accent-blue);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.8rem;
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 23px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--dark-brown);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+        }
+
+        .section-line {
+            width: 35px;
+            height: 2px;
+            margin-left: 15px;
+            background: var(--gold);
+        }
+
+        .applications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .list-item {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 17px 18px;
+            background: var(--light-cream);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+
+        .application-info {
+            color: var(--brown);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .application-info strong {
+            color: var(--dark-brown);
+        }
+
+        .application-date {
+            margin-top: 3px;
+            color: var(--light-brown);
+            font-size: 0.7rem;
+        }
+
+        .application-status {
+            flex-shrink: 0;
+            padding: 7px 10px;
+            background: rgba(201, 151, 80, 0.13);
+            border: 1px solid rgba(201, 151, 80, 0.35);
+            border-radius: 4px;
+            color: var(--brown);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
         }
 
         .empty-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            margin: 0;
+            padding: 22px;
+            background: var(--light-cream);
+            border: 1px dashed rgba(59, 42, 32, 0.20);
+            border-radius: 5px;
+            color: var(--light-brown);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* =====================
+           FOOTER
+        ===================== */
+
+        footer {
+            width: 100%;
+            padding: 25px 20px;
+            background: var(--navbar-cream);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            margin: 0;
+            color: var(--dark-brown);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* =====================
+           RESPONSIVE
+        ===================== */
+
+        @media (max-width: 950px) {
+            header {
+                flex-wrap: wrap;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 8px;
+                padding-bottom: 8px;
+            }
+
+            .logo-link {
+                margin-left: auto;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 35px;
+            }
+
+            .navbar-logo {
+                width: 160px;
+            }
+
+            .welcome-card {
+                padding: 30px 25px;
+            }
+
+            .welcome-card h1 {
+                font-size: 2.1rem;
+            }
+
+            .section-box {
+                padding: 22px;
+            }
+
+            .list-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            nav a,
+            .nav-logout-btn {
+                font-size: 0.67rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
+    <!-- NAVBAR -->
     <header>
-        <div class="logo">HIRAYA</div>
+
         <nav>
             <a href="{% url 'home' %}">Home</a>
+
             {% if user.is_staff or user.is_superuser %}
-                <a href="{% url 'profiles:admin_dashboard' %}" class="admin-link">Admin Board</a>
+                <a href="{% url 'profiles:admin_dashboard' %}" class="admin-link">
+                    Admin Board
+                </a>
             {% endif %}
+
             <a href="{% url 'jobs:job_list' %}">Jobs</a>
-            <a href="{% url 'mentor_list' %}">Mentors</a>
-            <a href="{% url 'interviews:start_interview' %}">Mock Interviews</a>
-            <form method="POST" action="{% url 'profiles:logout' %}" style="display: inline;">
+
+            <a href="{% url 'mentor_list' %}">
+                Mentors
+            </a>
+
+            <a href="{% url 'interviews:start_interview' %}">
+                Mock Interviews
+            </a>
+
+            <form method="POST"
+                  action="{% url 'profiles:logout' %}"
+                  class="nav-logout-form">
+
                 {% csrf_token %}
-                <button type="submit" class="nav-logout-btn">Logout</button>
+
+                <button type="submit" class="nav-logout-btn">
+                    Logout
+                </button>
+
             </form>
         </nav>
+
+        <!-- HIRAYA LOGO -->
+        <a href="{% url 'home' %}" class="logo-link">
+            <img
+                src="{% static 'assets/img/hiraya-logo.png' %}"
+                alt="HIRAYA"
+                class="navbar-logo"
+            >
+        </a>
+
     </header>
 
-    <div class="container">
-        <div class="welcome-card">
-            <div>
-                <h1>Welcome, {{ user.get_full_name|default:user.username }}!</h1>
-                <p>Manage your job applications, mentor matches, and interview practice sessions.</p>
-            </div>
-        </div>
 
-        <div class="grid-3">
-            <div class="card">
-                <div>
-                    <h3>💼 Job Listings</h3>
-                    <p>Explore engineering job opportunities and track your application status.</p>
+    <!-- MAIN -->
+    <main>
+
+        <div class="container">
+
+            <!-- WELCOME -->
+            <div class="welcome-card">
+
+                <div class="welcome-label">
+                    Student Dashboard
                 </div>
-                <a href="{% url 'jobs:job_list' %}" class="btn-link">Browse Job Openings</a>
+
+                <h1>
+                    Welcome, {{ user.get_full_name|default:user.username }}!
+                </h1>
+
+                <p>
+                    Manage your job applications, mentor matches,
+                    and interview practice sessions.
+                </p>
+
             </div>
 
-            <div class="card">
-                <div>
-                    <h3>🤝 Mentorship Matching</h3>
-                    <p>Connect with industry leaders and review personalized match scores.</p>
-                </div>
-                <a href="{% url 'mentor_list' %}" class="btn-link">View Recommended Mentors</a>
-            </div>
 
-            <div class="card">
-                <div>
-                    <h3>🎙 AI Mock Interviews</h3>
-                    <p>Practice technical and behavioral questions under timed interview conditions.</p>
-                </div>
-                <a href="{% url 'interviews:start_interview' %}" class="btn-link">Start Practice Session</a>
-            </div>
-        </div>
+            <!-- MAIN FEATURES -->
+            <div class="grid-3">
 
-        <!-- Recent Applications -->
-        <div class="section-box">
-            <h2>Recent Job Applications</h2>
-            {% if recent_applications %}
-                {% for app in recent_applications %}
-                    <div class="list-item">
-                        <div>
-                            <strong>{{ app.job.title }}</strong> at {{ app.job.company }}
-                            <div style="font-size: 0.8rem; color: var(--text-muted);">Applied: {{ app.applied_at|date:"M d, Y" }}</div>
+                <!-- JOBS -->
+                <div class="card">
+
+                    <div>
+
+                        <div class="card-icon">
+                            💼
                         </div>
-                        <span style="color: var(--accent-blue); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;">
-                            {{ app.get_status_display }}
-                        </span>
+
+                        <h3>Job Listings</h3>
+
+                        <p>
+                            Explore engineering job opportunities and
+                            track your application status.
+                        </p>
+
                     </div>
-                {% endfor %}
-            {% else %}
-                <p class="empty-text">You haven't applied to any jobs yet. Browse available jobs above to get started!</p>
-            {% endif %}
+
+                    <a href="{% url 'jobs:job_list' %}"
+                       class="btn-link">
+                        Browse Job Openings
+                    </a>
+
+                </div>
+
+
+                <!-- MENTORS -->
+                <div class="card">
+
+                    <div>
+
+                        <div class="card-icon">
+                            🤝
+                        </div>
+
+                        <h3>Mentorship Matching</h3>
+
+                        <p>
+                            Connect with industry leaders and review
+                            personalized match scores.
+                        </p>
+
+                    </div>
+
+                    <a href="{% url 'mentor_list' %}"
+                       class="btn-link">
+                        View Recommended Mentors
+                    </a>
+
+                </div>
+
+
+                <!-- INTERVIEWS -->
+                <div class="card">
+
+                    <div>
+
+                        <div class="card-icon">
+                            🎙
+                        </div>
+
+                        <h3>AI Mock Interviews</h3>
+
+                        <p>
+                            Practice technical and behavioral questions
+                            under timed interview conditions.
+                        </p>
+
+                    </div>
+
+                    <a href="{% url 'interviews:start_interview' %}"
+                       class="btn-link">
+                        Start Practice Session
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT APPLICATIONS -->
+            <div class="section-box">
+
+                <div class="section-header">
+                    <h2>Recent Job Applications</h2>
+                    <div class="section-line"></div>
+                </div>
+
+
+                {% if recent_applications %}
+
+                    <div class="applications-list">
+
+                        {% for app in recent_applications %}
+
+                            <div class="list-item">
+
+                                <div class="application-info">
+
+                                    <strong>
+                                        {{ app.job.title }}
+                                    </strong>
+
+                                    at {{ app.job.company }}
+
+                                    <div class="application-date">
+                                        Applied:
+                                        {{ app.applied_at|date:"M d, Y" }}
+                                    </div>
+
+                                </div>
+
+                                <span class="application-status">
+                                    {{ app.get_status_display }}
+                                </span>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="empty-text">
+                        You haven't applied to any jobs yet.
+                        Browse available jobs above to get started!
+                    </p>
+
+                {% endif %}
+
+            </div>
+
         </div>
-    </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-text">
+            © 2026 HIRAYA. Holy Angel University.
+        </p>
+    </footer>
 
 </body>
 </html>
