@@ -11,6 +11,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-blue: #38bdf8;
+            --accent-gold: #f59e0b;
             --accent-hover: #0284c7;
             --border-color: #334155;
             --input-bg: #0f172a;
@@ -40,7 +41,12 @@
             color: var(--accent-blue);
         }
 
-        nav a {
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a, nav button {
             color: var(--text-main);
             text-decoration: none;
             margin-left: 1.2rem;
@@ -48,8 +54,25 @@
             transition: color 0.2s ease;
         }
 
-        nav a:hover {
+        nav a:hover, nav button:hover {
             color: var(--accent-blue);
+        }
+
+        .admin-link {
+            color: var(--accent-gold) !important;
+            font-weight: 600;
+        }
+
+        .admin-link:hover {
+            color: #fbbf24 !important;
+        }
+
+        .nav-logout-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0;
         }
 
         .container {
@@ -166,11 +189,16 @@
         <div class="logo">HIRAYA</div>
         <nav>
             <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'profiles:dashboard' %}">Dashboard</a>
+            {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'profiles:admin_dashboard' %}" class="admin-link">Admin Board</a>
+            {% endif %}
             <a href="{% url 'jobs:job_list' %}">Jobs</a>
             <a href="{% url 'mentor_list' %}">Mentors</a>
             <a href="{% url 'interviews:start_interview' %}">Mock Interviews</a>
-            <a href="{% url 'profiles:login' %}">Logout</a>
+            <form method="POST" action="{% url 'profiles:logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-logout-btn">Logout</button>
+            </form>
         </nav>
     </header>
 

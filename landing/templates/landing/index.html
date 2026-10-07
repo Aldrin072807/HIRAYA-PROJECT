@@ -1,220 +1,182 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIRAYA | Career & Skills Platform</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
-        }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>HIRAYA - Career & Skills Platform</title>
+        
+        <!-- Font Awesome Icons -->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Start Bootstrap Grayscale CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/startbootstrap-grayscale@7.0.6/dist/css/styles.css" rel="stylesheet" />
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+            header.masthead {
+                padding-top: 10rem;
+                padding-bottom: 8rem;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 75%, #000 100%), url("https://raw.githubusercontent.com/StartBootstrap/startbootstrap-grayscale/master/src/assets/img/bg-masthead.jpg");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: scroll;
+                background-size: cover;
+                min-height: 100vh;
+            }
+            .contact-section {
+                background-color: #161616;
+            }
+            .card-contact {
+                background-color: #212529;
+                border: 1px solid #32383e;
+                border-radius: 0.5rem;
+                padding: 2rem 1.5rem;
+                text-align: center;
+                height: 100%;
+            }
+            .card-contact i {
+                font-size: 2rem;
+                color: #64a19d;
+                margin-bottom: 1rem;
+            }
+            .nav-logout-btn {
+                text-decoration: none;
+                border: none;
+                background: none;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body id="page-top">
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 3rem;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--accent-blue);
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
-        }
-
-        nav a:hover {
-            color: var(--accent-blue);
-        }
-
-        .container {
-            max-width: 900px;
-            width: 100%;
-            margin: 3rem auto;
-            padding: 0 1rem;
-        }
-
-        .hero {
-            text-align: center;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 3.5rem 2rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin: 0 0 1rem 0;
-            color: var(--accent-blue);
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 650px;
-            margin: 0 auto 2rem auto;
-            line-height: 1.6;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .btn {
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
-            padding: 0.75rem 1.8rem;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(56, 189, 248, 0.1);
-        }
-
-        .contact-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            color: var(--accent-blue);
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .contact-card {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.2rem;
-        }
-
-        .contact-card h4 {
-            margin: 0 0 0.5rem 0;
-            color: var(--text-main);
-        }
-
-        .contact-card p {
-            margin: 0.2rem 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">HIRAYA</div>
-        <nav>
-            <a href="#contact">Contact Us</a>
-            {% if user.is_authenticated %}
-                {% if user.is_staff or user.is_superuser %}
-                    <a href="{% url 'profiles:admin_dashboard' %}" style="color: #f59e0b; font-weight: 600;">Back to Admin Control Panel</a>
-                {% else %}
-                        <a href="{% url 'profiles:dashboard' %}">Go to Dashboard</a>
-                {% endif %}
-                <a href="{% url 'profiles:login' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'profiles:login' %}">Login</a>
-                <a href="{% url 'profiles:register' %}">Register</a>
-            {% endif %}
+        <!-- 1. Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand text-white fw-bold" href="#page-top">HIRAYA</a>
+                <button class="navbar-toggler navbar-toggler-right text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff or user.is_superuser %}
+                                <li class="nav-item"><a class="nav-link text-warning fw-bold" href="{% url 'profiles:admin_dashboard' %}">Admin</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link text-info fw-bold" href="{% url 'profiles:dashboard' %}">My Account</a></li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <form method="POST" action="{% url 'profiles:logout' %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="nav-link nav-logout-btn text-white-50">Logout</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'profiles:login' %}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'profiles:register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
         </nav>
-    </header>
 
-    <div class="container">
-        <div class="hero">
-            <h1>Welcome to HIRAYA</h1>
-            <p>Your integrated platform for job discovery, career mentorship, profile customization, and interview preparation.</p>
-            <div class="cta-buttons">
-                <a href="{% url 'profiles:login' %}" class="btn">Login</a>
-                <a href="{% url 'profiles:register' %}" class="btn btn-outline">Create Account</a>
-            </div>
-        </div>
-
-        <div class="contact-section" id="contact">
-            <h2>Get in Touch</h2>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <h4>📍 Location</h4>
-                    <p>Holy Angel University</p>
-                    <p>Angeles City, Pampanga</p>
-                </div>
-                <div class="contact-card">
-                    <h4>✉ Email Support</h4>
-                    <p>support@hiraya.edu.ph</p>
-                    <p>contact@hau.edu.ph</p>
-                </div>
-                <div class="contact-card">
-                    <h4>📞 Contact Lines</h4>
-                    <p>+63 (045) 888-8691</p>
-                    <p>Mon - Fri, 8:00 AM - 5:00 PM</p>
+        <!-- 2. Middle Hero Section (Masthead) -->
+        <header class="masthead d-flex align-items-center">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <h1 class="mx-auto my-0 text-uppercase">HIRAYA</h1>
+                        <h2 class="text-white-50 mx-auto mt-3 mb-5">Empowering engineers through career opportunities, skill development, and mentorship.</h2>
+                        
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff or user.is_superuser %}
+                                <a class="btn btn-primary btn-lg text-uppercase fw-bold" href="{% url 'profiles:admin_dashboard' %}">Admin</a>
+                            {% else %}
+                                <a class="btn btn-primary btn-lg text-uppercase fw-bold" href="{% url 'profiles:dashboard' %}">My Account</a>
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-primary btn-lg text-uppercase fw-bold px-4 py-3" href="{% url 'profiles:login' %}">Get Started</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </header>
 
-    <footer>
-        &copy; 2026 HIRAYA Project. Holy Angel University - Computer Engineering.
-    </footer>
+        <!-- 3. About Section (#about) -->
+        <section class="about-section text-center bg-black text-white py-5" id="about">
+            <div class="container px-4 px-lg-5 py-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-white mb-4 text-uppercase tracking-wider">About HIRAYA</h2>
+                        <p class="text-white-50 lead">
+                            HIRAYA is a comprehensive platform engineered to bridge the gap between academic preparation and professional industry standards.
+                        </p>
+                        <p class="text-white-50">
+                            We provide aspiring technical professionals with curated job boards, personalized industry mentorship matching, and automated mock interview environments to prepare you for real-world technical evaluations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-</body>
+        <!-- 4. Contact Section (#contact) -->
+        <section class="contact-section py-5 text-white" id="contact">
+            <div class="container px-4 px-lg-5 py-5">
+                <div class="text-center mb-5">
+                    <h2 class="text-white text-uppercase">Contact Us</h2>
+                    <p class="text-white-50">Reach out to our platform team or visit our administration offices.</p>
+                </div>
+                
+                <div class="row gx-4 gx-lg-5">
+                    <!-- Address Card -->
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card-contact">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h4 class="text-uppercase m-0 fs-5 text-white">Address</h4>
+                            <hr class="my-4 border-secondary" />
+                            <div class="small text-white-50">Holy Angel University, Sto. Rosario St., Angeles City, Pampanga</div>
+                        </div>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card-contact">
+                            <i class="fas fa-envelope"></i>
+                            <h4 class="text-uppercase m-0 fs-5 text-white">Email</h4>
+                            <hr class="my-4 border-secondary" />
+                            <div class="small text-white-50">
+                                <a href="mailto:support@hiraya.edu.ph" class="text-info text-decoration-none">support@hiraya.edu.ph</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phone Card -->
+                    <div class="col-md-4">
+                        <div class="card-contact">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4 class="text-uppercase m-0 fs-5 text-white">Phone</h4>
+                            <hr class="my-4 border-secondary" />
+                            <div class="small text-white-50">+63 (045) 888-2000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer bg-black small text-center text-white-50 py-4 border-top border-dark">
+            <div class="container px-4 px-lg-5">Copyright &copy; HIRAYA 2026. All rights reserved.</div>
+        </footer>
+
+        <!-- Bootstrap Bundle JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>
