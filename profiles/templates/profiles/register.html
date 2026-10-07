@@ -14,6 +14,7 @@
             --accent-hover: #0284c7;
             --border-color: #334155;
             --input-bg: #0f172a;
+            --error-red: #f87171;
         }
         body {
             background-color: var(--bg-color);
@@ -24,38 +25,31 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 1rem;
-            box-sizing: border-box;
         }
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2.5rem;
-            max-width: 500px;
-            width: 100%;
+            max-width: 400px;
+            width: 90%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         h2 {
             margin-top: 0;
             margin-bottom: 1.5rem;
             text-align: center;
-            font-size: 1.8rem;
         }
-        p {
+        .form-group {
             margin-bottom: 1.2rem;
         }
         label {
             display: block;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             color: var(--text-muted);
             font-size: 0.9rem;
-            font-weight: 500;
         }
-        input[type="text"], 
-        input[type="email"], 
-        input[type="password"], 
-        textarea {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 0.75rem;
             background-color: var(--input-bg);
@@ -63,21 +57,15 @@
             border-radius: 6px;
             color: var(--text-main);
             box-sizing: border-box;
-            font-family: inherit;
             font-size: 0.95rem;
         }
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        input:focus, textarea:focus {
+        input:focus {
             outline: none;
             border-color: var(--accent-blue);
         }
-        .helptext {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .error-message {
+            color: var(--error-red);
+            font-size: 0.85rem;
             margin-top: 0.3rem;
         }
         .btn {
@@ -85,12 +73,12 @@
             color: #0f172a;
             font-weight: 600;
             border: none;
-            padding: 0.85rem;
+            padding: 0.8rem;
             border-radius: 6px;
             font-size: 1rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             transition: background-color 0.2s ease;
         }
         .btn:hover {
@@ -106,18 +94,46 @@
         .footer-link a {
             color: var(--accent-blue);
             text-decoration: none;
-            font-weight: 500;
+        }
+        .footer-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2>Register for Hiraya</h2>
-        <form method="POST">
+        <h2>Create an Account</h2>
+
+        <form method="POST" action="{% url 'profiles:register' %}">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn">Sign Up</button>
+
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error-message">{{ form.password.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_confirm_password">Confirm Password</label>
+                {{ form.confirm_password }}
+                {% if form.confirm_password.errors %}
+                    <div class="error-message">{{ form.confirm_password.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn">Register</button>
         </form>
+
         <div class="footer-link">
             Already have an account? <a href="{% url 'profiles:login' %}">Log in here</a>
         </div>

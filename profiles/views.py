@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.apps import apps
-
 from .forms import UserRegisterForm
 from .models import UserProfile
 
@@ -25,6 +24,7 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             return redirect('profiles:dashboard')
     else:
@@ -32,23 +32,28 @@ def register(request):
     return render(request, 'profiles/register.html', {'form': form})
 
 
-def custom_login(request):
+def login_view(request):
     """
-    Handles role-based authentication routing:
-    - Admin/Staff Users -> Custom Admin Control Board
-    - Regular Members -> Student Dashboard
+    Authenticates users using ONLY their Email address.
     """
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+        email_input = request.POST.get('email', '').strip()
+        password_input = request.POST.get('password', '').strip()
+
+        # Retrieve user strictly by email (case-insensitive)
+        user = User.objects.filter(email__iexact=email_input).first()
+
+        if user and user.check_password(password_input) and user.is_active:
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
+
             if user.is_staff or user.is_superuser:
                 return redirect('profiles:admin_dashboard')
             return redirect('profiles:dashboard')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'profiles/login.html', {'form': form})
+        else:
+            return render(request, 'profiles/login.html', {'error': True})
+
+    return render(request, 'profiles/login.html')
 
 
 @login_required
@@ -89,3 +94,9 @@ def admin_dashboard(request):
         'recent_applications': recent_apps,
     }
     return render(request, 'profiles/admin_dashboard.html', context)
+
+
+def custom_logout(request):
+    """Logs out the user and redirects back to the public landing page."""
+    logout(request)
+    return redirect('home')

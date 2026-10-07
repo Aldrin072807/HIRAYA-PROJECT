@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -121,8 +122,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_URL = "/profiles/login/"
+# Tells Django where to look for static folders in your project
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
-import os
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'profiles:dashboard'
+LOGIN_URL = 'profiles:login'
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+
+AUTHENTICATION_BACKENDS = [
+    'profiles.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
