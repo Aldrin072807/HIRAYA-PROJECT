@@ -13,10 +13,7 @@ def get_dashboard_url(user):
 
 @login_required(login_url='profiles:login')
 def job_list(request):
-    """
-    Shows all available job postings.
-    Accessible to both regular students and staff members.
-    """
+    """Shows all available job postings."""
     jobs = Job.objects.all().order_by('-posted_at')
     dashboard_url = get_dashboard_url(request.user)
 
@@ -31,6 +28,7 @@ def job_detail(request, job_id):
     job = get_object_or_404(Job, id=job_id)
 
     already_applied = False
+
     if request.user.is_authenticated:
         already_applied = Application.objects.filter(
             job=job,
@@ -39,27 +37,27 @@ def job_detail(request, job_id):
 
     dashboard_url = get_dashboard_url(request.user)
 
-    context = {
+    return render(request, 'jobs/job_detail.html', {
         'job': job,
         'already_applied': already_applied,
         'dashboard_url': dashboard_url,
-    }
-
-    return render(request, 'jobs/job_detail.html', context)
+    })
 
 
 @login_required(login_url='profiles:login')
 def apply_to_job(request, job_id):
-    """Creates an Application for the logged-in user, if they haven't already applied."""
+    """Creates a pending application for the logged-in student."""
     job = get_object_or_404(Job, id=job_id)
 
     if not Application.objects.filter(
         job=job,
         applicant=request.user
     ).exists():
+
         Application.objects.create(
             job=job,
-            applicant=request.user
+            applicant=request.user,
+            status='pending'
         )
 
     return redirect('jobs:job_detail', job_id=job.id)
@@ -67,7 +65,7 @@ def apply_to_job(request, job_id):
 
 @login_required(login_url='profiles:login')
 def application_history(request):
-    """Shows all applications the logged-in user has submitted."""
+    """Shows the student's submitted applications and their status."""
     applications = Application.objects.filter(
         applicant=request.user
     ).select_related('job').order_by('-applied_at')
@@ -80,9 +78,100 @@ def application_history(request):
     })
 
 
+# =========================================================
+# ADMIN APPLICATION MANAGEMENT
+# =========================================================
+
+@login_required(login_url='profiles:login')
+def admin_application_list(request):
+    """Shows all job applications to staff members."""
+    if not request.user.is_staff:
+        return redirect('profiles:dashboard')
+
+    applications = Application.objects.select_related(
+        'job',
+        'applicant'
+    ).order_by('-applied_at')
+
+    return render(request, 'jobs/admin_application_list.html', {
+        'applications': applications,
+        'dashboard_url': 'profiles:admin_dashboard',
+    })
+
+
+@login_required(login_url='profiles:login')
+def admin_application_detail(request, application_id):
+    """Shows the applicant's information to staff members."""
+    if not request.user.is_staff:
+        return redirect('profiles:dashboard')
+
+    application = get_object_or_404(
+        Application.objects.select_related(
+            'job',
+            'applicant'
+        ),
+        id=application_id
+    )
+
+    # Get the student's profile if it exists
+    profile = getattr(application.applicant, 'userprofile', None)
+
+    return render(request, 'jobs/admin_application_detail.html', {
+        'application': application,
+        'profile': profile,
+        'dashboard_url': 'profiles:admin_dashboard',
+    })
+
+
+@login_required(login_url='profiles:login')
+def accept_application(request, application_id):
+    """Allows staff to accept an application."""
+    if not request.user.is_staff:
+        return redirect('profiles:dashboard')
+
+    application = get_object_or_404(
+        Application,
+        id=application_id
+    )
+
+    if request.method == 'POST':
+        application.status = 'accepted'
+        application.save()
+
+    return redirect(
+        'jobs:admin_application_detail',
+        application_id=application.id
+    )
+
+
+@login_required(login_url='profiles:login')
+def reject_application(request, application_id):
+    """Allows staff to reject an application."""
+    if not request.user.is_staff:
+        return redirect('profiles:dashboard')
+
+    application = get_object_or_404(
+        Application,
+        id=application_id
+    )
+
+    if request.method == 'POST':
+        application.status = 'rejected'
+        application.save()
+
+    return redirect(
+        'jobs:admin_application_detail',
+        application_id=application.id
+    )
+
+
+# =========================================================
+# ADMIN JOB MANAGEMENT
+# =========================================================
+
 @login_required(login_url='profiles:login')
 def add_job(request):
-    """Staff-only view to add a job posting using custom frontend forms."""
+    """Staff-only view to add a job posting."""
     if not request.user.is_staff:
         return redirect('profiles:dashboard')
 

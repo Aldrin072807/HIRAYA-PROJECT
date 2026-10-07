@@ -1,0 +1,434 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Review Application | HIRAYA</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+            --gold: #c99750;
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+            --white: #fffaf4;
+            --green: #527853;
+            --red: #a84f4f;
+            --border: rgba(59, 42, 32, 0.15);
+        }
+
+        body {
+            margin: 0;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+            font-family: "Montserrat", sans-serif;
+        }
+
+        header {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            background: var(--navbar-cream);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-link {
+            color: var(--dark-brown);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo {
+            margin-left: auto;
+            width: 190px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        .heading-label {
+            color: var(--gold);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 5px 0 30px;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 2.7rem;
+        }
+
+        .card {
+            margin-bottom: 22px;
+            padding: 30px;
+
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            box-shadow: 0 8px 25px rgba(59, 42, 32, 0.06);
+        }
+
+        .card h2 {
+            margin: 0 0 22px;
+            padding-bottom: 12px;
+
+            border-bottom: 1px solid var(--border);
+
+            font-family: "Cormorant Garamond", serif;
+            font-size: 1.7rem;
+        }
+
+        .info-row {
+            margin-bottom: 18px;
+        }
+
+        .label {
+            margin-bottom: 5px;
+            color: var(--light-brown);
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .value {
+            color: var(--dark-brown);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 8px 12px;
+
+            background: rgba(201, 151, 80, 0.15);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .decision-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .decision-buttons form {
+            margin: 0;
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px;
+
+            border-radius: 4px;
+
+            color: white;
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+        }
+
+        .accept {
+            background: var(--green);
+            border: 1px solid var(--green);
+        }
+
+        .reject {
+            background: var(--red);
+            border: 1px solid var(--red);
+        }
+
+        .button:hover {
+            opacity: 0.88;
+        }
+
+        .no-profile {
+            padding: 15px;
+            background: var(--light-cream);
+            border-radius: 4px;
+
+            color: var(--light-brown);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            .decision-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .logo {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <a href="{% url 'jobs:admin_application_list' %}"
+       class="back-link">
+        ← APPLICATIONS
+    </a>
+
+    <img
+        src="{% static 'assets/img/hiraya-logo.png' %}"
+        class="logo"
+        alt="HIRAYA">
+
+</header>
+
+
+<main class="container">
+
+    <div class="heading-label">
+        Application Review
+    </div>
+
+    <h1>
+        {% if application.applicant.first_name or application.applicant.last_name %}
+
+            {{ application.applicant.first_name }}
+            {{ application.applicant.last_name }}
+
+        {% else %}
+
+            {{ application.applicant.username }}
+
+        {% endif %}
+    </h1>
+
+
+    <!-- APPLICATION INFORMATION -->
+
+    <div class="card">
+
+        <h2>Application Information</h2>
+
+        <div class="info-row">
+            <div class="label">Job</div>
+
+            <div class="value">
+                {{ application.job.title }}
+                at {{ application.job.company }}
+            </div>
+        </div>
+
+
+        <div class="info-row">
+            <div class="label">Application Date</div>
+
+            <div class="value">
+                {{ application.applied_at|date:"F d, Y" }}
+            </div>
+        </div>
+
+
+        <div class="info-row">
+            <div class="label">Current Status</div>
+
+            <div class="value">
+                <span class="status">
+                    {{ application.get_status_display }}
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- STUDENT INFORMATION -->
+
+    <div class="card">
+
+        <h2>Student Information</h2>
+
+
+        <div class="info-row">
+            <div class="label">Name</div>
+
+            <div class="value">
+
+                {% if application.applicant.first_name or application.applicant.last_name %}
+
+                    {{ application.applicant.first_name }}
+                    {{ application.applicant.last_name }}
+
+                {% else %}
+
+                    Not provided
+
+                {% endif %}
+
+            </div>
+        </div>
+
+
+        <div class="info-row">
+            <div class="label">Email</div>
+
+            <div class="value">
+                {{ application.applicant.email }}
+            </div>
+        </div>
+
+
+        {% if profile %}
+
+            <div class="info-row">
+                <div class="label">Program / Course</div>
+
+                <div class="value">
+                    {{ profile.program|default:"Not provided" }}
+                </div>
+            </div>
+
+
+            <div class="info-row">
+                <div class="label">Year Level</div>
+
+                <div class="value">
+                    {{ profile.year_level|default:"Not provided" }}
+                </div>
+            </div>
+
+
+            <div class="info-row">
+                <div class="label">About</div>
+
+                <div class="value">
+                    {{ profile.bio|default:"Not provided" }}
+                </div>
+            </div>
+
+
+            <div class="info-row">
+                <div class="label">Skills</div>
+
+                <div class="value">
+                    {{ profile.skills|default:"Not provided" }}
+                </div>
+            </div>
+
+
+            <div class="info-row">
+                <div class="label">Experience / Projects</div>
+
+                <div class="value">
+                    {{ profile.experience|default:"Not provided" }}
+                </div>
+            </div>
+
+
+            <div class="info-row">
+                <div class="label">Career Interests</div>
+
+                <div class="value">
+                    {{ profile.career_interests|default:"Not provided" }}
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="no-profile">
+                This account does not have a student profile yet.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ADMIN DECISION -->
+
+    <div class="card">
+
+        <h2>Application Decision</h2>
+
+        <p>
+            Choose whether to accept or decline this application.
+        </p>
+
+
+        <div class="decision-buttons">
+
+            <form
+                method="POST"
+                action="{% url 'jobs:accept_application' application.id %}">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="button accept">
+
+                    Accept Applicant
+
+                </button>
+
+            </form>
+
+
+            <form
+                method="POST"
+                action="{% url 'jobs:reject_application' application.id %}">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="button reject">
+
+                    Decline Applicant
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
