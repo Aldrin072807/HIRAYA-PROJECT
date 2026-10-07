@@ -1,142 +1,680 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Register | HIRAYA</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
     <style>
+
+        /* =========================================
+           HIRAYA COLORS
+        ========================================== */
+
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-hover: #0284c7;
-            --border-color: #334155;
-            --input-bg: #0f172a;
-            --error-red: #f87171;
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+
+            --gold: #c99750;
+            --light-gold: #e7bd80;
+
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+
+            --white: #fffaf4;
+
+            --error-red: #b94a48;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-        h2 {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-main);
+
+
+        * {
             box-sizing: border-box;
-            font-size: 0.95rem;
         }
-        input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
+
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
         }
-        .error-message {
-            color: var(--error-red);
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
+
+
+        body {
+            font-family: "Montserrat", sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(50, 37, 28, 0.82) 0%,
+                    rgba(58, 44, 35, 0.62) 50%,
+                    rgba(58, 44, 35, 0.30) 100%
+                ),
+                url("{% static 'assets/img/bg-masthead.jpg' %}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
-        .btn {
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
+
+
+
+        /* =========================================
+           NAVBAR
+        ========================================== */
+
+        .navbar {
             width: 100%;
-            margin-top: 1rem;
-            transition: background-color 0.2s ease;
+            height: 78px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+
+            background: var(--navbar-cream);
+
+            border-bottom: 1px solid rgba(59, 42, 32, 0.15);
+
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
+
+            position: relative;
+            z-index: 10;
         }
-        .btn:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
+
+
+        .back-home {
+            color: var(--dark-brown);
+
+            font-size: 0.78rem;
+            font-weight: 600;
+
+            letter-spacing: 1.5px;
+
+            text-decoration: none;
+
+            transition: 0.25s ease;
         }
-        .footer-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+
+
+        .back-home:hover {
+            color: var(--gold);
         }
-        .footer-link a {
-            color: var(--accent-blue);
+
+
+        .logo-link {
+            margin-left: auto;
+
+            display: flex;
+            align-items: center;
+
             text-decoration: none;
         }
-        .footer-link a:hover {
-            text-decoration: underline;
+
+
+        .navbar-logo {
+            display: block;
+
+            width: 220px;
+            height: 68px;
+
+            object-fit: contain;
+
+            transition: 0.3s ease;
         }
+
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+
+
+        /* =========================================
+           REGISTER AREA
+        ========================================== */
+
+        .register-wrapper {
+            flex: 1;
+
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 50px 20px;
+        }
+
+
+
+        /* =========================================
+           REGISTER CARD
+        ========================================== */
+
+        .register-card {
+            width: 100%;
+
+            max-width: 440px;
+
+            padding: 42px;
+
+            background: rgba(255, 250, 244, 0.96);
+
+            border: 1px solid rgba(59, 42, 32, 0.12);
+
+            border-radius: 8px;
+
+            box-shadow: 0 20px 50px rgba(40, 27, 19, 0.25);
+        }
+
+
+
+        /* =========================================
+           CARD HEADER
+        ========================================== */
+
+        .card-decoration {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .decoration-line {
+            width: 35px;
+            height: 1px;
+
+            background: var(--gold);
+        }
+
+
+        .decoration-star {
+            color: var(--gold);
+
+            font-size: 0.8rem;
+        }
+
+
+        .register-card h1 {
+            margin: 0;
+
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 2.6rem;
+
+            font-weight: 600;
+
+            color: var(--dark-brown);
+
+            text-align: center;
+        }
+
+
+        .register-subtitle {
+            margin: 10px 0 30px;
+
+            color: var(--light-brown);
+
+            font-size: 0.82rem;
+
+            line-height: 1.7;
+
+            text-align: center;
+        }
+
+
+
+        /* =========================================
+           FORM
+        ========================================== */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--brown);
+
+            font-size: 0.72rem;
+
+            font-weight: 600;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+        }
+
+
+
+        /* Django-generated inputs */
+
+        .form-group input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            background: var(--white);
+
+            border: 1px solid rgba(59, 42, 32, 0.22);
+
+            border-radius: 4px;
+
+            color: var(--dark-brown);
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 0.86rem;
+
+            transition: 0.25s ease;
+        }
+
+
+        .form-group input::placeholder {
+            color: #a79a90;
+        }
+
+
+        .form-group input:focus {
+            outline: none;
+
+            border-color: var(--gold);
+
+            box-shadow: 0 0 0 3px rgba(201, 151, 80, 0.12);
+        }
+
+
+
+        /* =========================================
+           ERROR MESSAGE
+        ========================================== */
+
+        .error-message {
+            margin-top: 7px;
+
+            color: var(--error-red);
+
+            font-size: 0.72rem;
+
+            line-height: 1.5;
+        }
+
+
+
+        /* =========================================
+           REGISTER BUTTON
+        ========================================== */
+
+        .register-button {
+            width: 100%;
+
+            margin-top: 8px;
+
+            padding: 14px 20px;
+
+            background: var(--gold);
+
+            border: 1px solid var(--gold);
+
+            border-radius: 4px;
+
+            color: var(--dark-brown);
+
+            font-family: "Montserrat", sans-serif;
+
+            font-size: 0.76rem;
+
+            font-weight: 600;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+        }
+
+
+        .register-button:hover {
+            background: var(--cream);
+
+            border-color: var(--cream);
+
+            transform: translateY(-2px);
+        }
+
+
+
+        /* =========================================
+           LOGIN LINK
+        ========================================== */
+
+        .login-section {
+            margin-top: 27px;
+
+            padding-top: 23px;
+
+            border-top: 1px solid rgba(59, 42, 32, 0.12);
+
+            color: var(--light-brown);
+
+            font-size: 0.78rem;
+
+            text-align: center;
+        }
+
+
+        .login-section a {
+            color: var(--gold);
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: 0.2s ease;
+        }
+
+
+        .login-section a:hover {
+            color: var(--dark-brown);
+        }
+
+
+
+        /* =========================================
+           FOOTER
+        ========================================== */
+
+        .footer {
+            width: 100%;
+
+            padding: 18px 20px;
+
+            background: var(--navbar-cream);
+
+            border-top: 1px solid rgba(59, 42, 32, 0.15);
+
+            color: var(--dark-brown);
+
+            font-size: 0.68rem;
+
+            font-weight: 500;
+
+            letter-spacing: 0.5px;
+
+            text-align: center;
+        }
+
+
+
+        /* =========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                height: 70px;
+
+                padding: 0 20px;
+            }
+
+
+            .navbar-logo {
+                width: 155px;
+                height: 55px;
+            }
+
+
+            .back-home {
+                font-size: 0.68rem;
+            }
+
+
+            .register-wrapper {
+                padding: 35px 18px;
+            }
+
+
+            .register-card {
+                padding: 35px 25px;
+            }
+
+
+            .register-card h1 {
+                font-size: 2.2rem;
+            }
+
+        }
+
     </style>
+
 </head>
+
+
 <body>
-    <div class="card">
-        <h2>Create an Account</h2>
 
-        <form method="POST" action="{% url 'profiles:register' %}">
-            {% csrf_token %}
 
-            <div class="form-group">
-                <label for="id_email">Email Address</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="error-message">{{ form.email.errors.0 }}</div>
-                {% endif %}
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <nav class="navbar">
+
+
+        <a href="/" class="back-home">
+            ← HOME
+        </a>
+
+
+        <a href="/" class="logo-link">
+
+            <img
+                src="/static/assets/img/hiraya-logo.png"
+                class="navbar-logo"
+                alt="HIRAYA">
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- =========================================
+         REGISTER AREA
+    ========================================== -->
+
+    <main class="register-wrapper">
+
+
+        <div class="register-card">
+
+
+            <!-- DECORATION -->
+
+            <div class="card-decoration">
+
+                <div class="decoration-line"></div>
+
+                <span class="decoration-star">
+                    ✦
+                </span>
+
+                <div class="decoration-line"></div>
+
             </div>
 
-            <div class="form-group">
-                <label for="id_password">Password</label>
-                {{ form.password }}
-                {% if form.password.errors %}
-                    <div class="error-message">{{ form.password.errors.0 }}</div>
-                {% endif %}
+
+
+            <!-- TITLE -->
+
+            <h1>
+                Create an Account
+            </h1>
+
+
+            <p class="register-subtitle">
+                Create your HIRAYA account to get started.
+            </p>
+
+
+
+            <!-- REGISTER FORM -->
+
+            <form
+                method="POST"
+                action="{% url 'profiles:register' %}">
+
+
+                {% csrf_token %}
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="id_email">
+                        Email Address
+                    </label>
+
+
+                    {{ form.email }}
+
+
+                    {% if form.email.errors %}
+
+                        <div class="error-message">
+                            {{ form.email.errors.0 }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="id_password">
+                        Password
+                    </label>
+
+
+                    {{ form.password }}
+
+
+                    {% if form.password.errors %}
+
+                        <div class="error-message">
+                            {{ form.password.errors.0 }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="id_confirm_password">
+                        Confirm Password
+                    </label>
+
+
+                    {{ form.confirm_password }}
+
+
+                    {% if form.confirm_password.errors %}
+
+                        <div class="error-message">
+                            {{ form.confirm_password.errors.0 }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- REGISTER BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-button">
+
+                    Register
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- LOGIN LINK -->
+
+            <div class="login-section">
+
+                Already have an account?
+
+                <a href="{% url 'profiles:login' %}">
+                    Log in here
+                </a>
+
             </div>
 
-            <div class="form-group">
-                <label for="id_confirm_password">Confirm Password</label>
-                {{ form.confirm_password }}
-                {% if form.confirm_password.errors %}
-                    <div class="error-message">{{ form.confirm_password.errors.0 }}</div>
-                {% endif %}
-            </div>
 
-            <button type="submit" class="btn">Register</button>
-        </form>
-
-        <div class="footer-link">
-            Already have an account? <a href="{% url 'profiles:login' %}">Log in here</a>
         </div>
-    </div>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="footer">
+
+        Copyright &copy; HIRAYA 2026.
+        All rights reserved.
+
+    </footer>
+
+
 </body>
+
 </html>

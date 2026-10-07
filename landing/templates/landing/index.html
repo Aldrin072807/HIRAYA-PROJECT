@@ -1,182 +1,1332 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>HIRAYA - Career & Skills Platform</title>
-        
-        <!-- Font Awesome Icons -->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-        <!-- Start Bootstrap Grayscale CDN -->
-        <link href="https://cdn.jsdelivr.net/npm/startbootstrap-grayscale@7.0.6/dist/css/styles.css" rel="stylesheet" />
 
-        <style>
-            html {
-                scroll-behavior: smooth;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HIRAYA - Career & Skills Platform</title>
+
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+            crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           COLORS
+        ========================================== */
+
+        :root {
+            --dark-brown: #3b2a20;
+            --brown: #574235;
+            --light-brown: #76675d;
+
+            --gold: #c99750;
+            --light-gold: #e7bd80;
+
+            --cream: #ead0aa;
+            --navbar-cream: #f3e3cc;
+            --light-cream: #fbf5ec;
+
+            --white: #fffaf4;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: "Montserrat", sans-serif;
+            background: var(--light-cream);
+            color: var(--dark-brown);
+        }
+
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================== */
+
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            min-height: 78px;
+
+            z-index: 1000;
+
+            background: var(--navbar-cream);
+
+            border-bottom: 1px solid rgba(59, 42, 32, 0.15);
+
+            box-shadow: 0 2px 12px rgba(59, 42, 32, 0.08);
+        }
+
+
+        .nav-inner {
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+
+        /* =========================================
+           NAVIGATION LINKS
+        ========================================== */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+
+        .nav-links a,
+        .logout-button {
+            color: var(--dark-brown);
+
+            font-size: 0.78rem;
+            font-weight: 600;
+
+            letter-spacing: 1.5px;
+
+            text-decoration: none;
+
+            transition: 0.25s ease;
+        }
+
+
+        .nav-links a:hover,
+        .logout-button:hover {
+            color: var(--gold);
+        }
+
+
+        .logout-form {
+            display: inline;
+            margin: 0;
+        }
+
+
+        .logout-button {
+            padding: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+
+
+        /* =========================================
+           HIRAYA LOGO
+        ========================================== */
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-left: auto;
+
+            text-decoration: none;
+        }
+
+
+        .navbar-logo {
+            display: block;
+
+            width: 220px;
+            height: 68px;
+
+            object-fit: contain;
+            object-position: center;
+
+            transition: 0.3s ease;
+        }
+
+
+        .navbar-logo:hover {
+            transform: scale(1.03);
+        }
+
+
+
+        /* =========================================
+           HERO
+        ========================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(50, 37, 28, 0.88) 0%,
+                    rgba(58, 44, 35, 0.70) 45%,
+                    rgba(58, 44, 35, 0.25) 100%
+                ),
+                url("{% static 'assets/img/bg-masthead.jpg' %}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 720px;
+
+            padding-top: 90px;
+        }
+
+
+
+        /* =========================================
+           HERO DECORATION
+        ========================================== */
+
+        .hero-decoration {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .hero-line {
+            width: 65px;
+            height: 2px;
+
+            background: var(--gold);
+        }
+
+
+        .hero-star {
+            color: var(--light-gold);
+
+            font-size: 0.9rem;
+        }
+
+
+
+        /* =========================================
+           HERO TEXT
+        ========================================== */
+
+        .hero-title {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: clamp(4rem, 7vw, 6.3rem);
+
+            font-weight: 600;
+
+            line-height: 0.95;
+
+            color: var(--white);
+
+            margin-bottom: 28px;
+        }
+
+
+        .hero-title span {
+            color: var(--light-gold);
+        }
+
+
+        .hero-text {
+            max-width: 620px;
+
+            color: rgba(255, 250, 244, 0.86);
+
+            font-size: 1rem;
+
+            line-height: 1.9;
+
+            margin-bottom: 35px;
+        }
+
+
+
+        /* =========================================
+           BUTTON
+        ========================================== */
+
+        .hiraya-button {
+            display: inline-block;
+
+            padding: 14px 30px;
+
+            background: var(--gold);
+
+            color: var(--dark-brown);
+
+            border: 1px solid var(--gold);
+            border-radius: 3px;
+
+            font-size: 0.76rem;
+            font-weight: 600;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+            text-decoration: none;
+
+            transition: 0.3s ease;
+        }
+
+
+        .hiraya-button:hover {
+            background: var(--cream);
+
+            border-color: var(--cream);
+
+            color: var(--dark-brown);
+
+            transform: translateY(-2px);
+        }
+
+
+
+        /* =========================================
+           GENERAL SECTION STYLE
+        ========================================== */
+
+        .section-label {
+            color: var(--gold);
+
+            font-size: 0.72rem;
+
+            font-weight: 600;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+        }
+
+
+        .section-title {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 3.2rem;
+
+            font-weight: 600;
+
+            color: var(--dark-brown);
+
+            margin: 0;
+        }
+
+
+        .section-divider {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            margin: 20px 0 30px;
+        }
+
+
+        .divider-line {
+            width: 45px;
+
+            height: 1px;
+
+            background: var(--gold);
+        }
+
+
+        .divider-star {
+            color: var(--gold);
+        }
+
+
+        .section-text {
+            max-width: 820px;
+
+            margin: auto;
+
+            color: var(--light-brown);
+
+            line-height: 1.9;
+        }
+
+
+
+        /* =========================================
+           ABOUT
+        ========================================== */
+
+        .about-section {
+            padding: 110px 0;
+
+            background: var(--light-cream);
+        }
+
+
+        .features {
+            margin-top: 60px;
+        }
+
+
+        .feature-box {
+            height: 100%;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            transition: 0.3s ease;
+        }
+
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            border: 1px solid rgba(201, 151, 80, 0.45);
+
+            border-radius: 50%;
+
+            color: var(--gold);
+
+            font-size: 1.5rem;
+        }
+
+
+        .feature-box h3 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 1.7rem;
+
+            font-weight: 600;
+
+            color: var(--dark-brown);
+        }
+
+
+        .feature-box p {
+            color: var(--light-brown);
+
+            font-size: 0.87rem;
+
+            line-height: 1.8;
+        }
+
+
+
+        /* =========================================
+           CONTACT
+        ========================================== */
+
+        .contact-section {
+            padding: 105px 0;
+
+            background: var(--cream);
+        }
+
+
+        .contact-items {
+            margin-top: 55px;
+        }
+
+
+        .contact-card {
+            height: 100%;
+
+            padding: 38px 25px;
+
+            text-align: center;
+
+            background: rgba(255, 250, 244, 0.78);
+
+            border: 1px solid rgba(59, 42, 32, 0.12);
+
+            border-radius: 5px;
+
+            transition: 0.3s ease;
+        }
+
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 12px 30px rgba(59, 42, 32, 0.10);
+        }
+
+
+        .contact-icon {
+            color: var(--gold);
+
+            font-size: 1.7rem;
+
+            margin-bottom: 20px;
+        }
+
+
+        .contact-card h3 {
+            font-family: "Cormorant Garamond", serif;
+
+            font-size: 1.6rem;
+
+            font-weight: 600;
+
+            color: var(--dark-brown);
+        }
+
+
+        .contact-card p,
+        .contact-card a {
+            color: var(--light-brown);
+
+            font-size: 0.85rem;
+
+            line-height: 1.8;
+
+            text-decoration: none;
+        }
+
+
+        .contact-card a:hover {
+            color: var(--gold);
+        }
+
+
+
+        /* =========================================
+           FOOTER - LIGHT VERSION
+        ========================================== */
+
+        .footer {
+            padding: 35px 0;
+
+            background: var(--navbar-cream);
+
+            text-align: center;
+
+            border-top: 1px solid rgba(59, 42, 32, 0.15);
+
+            box-shadow: 0 -2px 12px rgba(59, 42, 32, 0.05);
+        }
+
+
+        .footer-logo {
+            display: block;
+
+            width: 200px;
+
+            height: auto;
+
+            object-fit: contain;
+
+            margin: 0 auto 15px;
+        }
+
+
+        .footer-text {
+            color: var(--dark-brown);
+
+            font-size: 0.72rem;
+
+            font-weight: 500;
+
+            letter-spacing: 0.5px;
+        }
+
+
+
+        /* =========================================
+           MOBILE
+        ========================================== */
+
+        .mobile-menu {
+            display: none;
+        }
+
+
+        @media (max-width: 768px) {
+
+            .main-nav {
+                min-height: 70px;
+
+                padding: 7px 0;
             }
-            header.masthead {
-                padding-top: 10rem;
-                padding-bottom: 8rem;
-                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 75%, #000 100%), url("https://raw.githubusercontent.com/StartBootstrap/startbootstrap-grayscale/master/src/assets/img/bg-masthead.jpg");
-                background-position: center;
-                background-repeat: no-repeat;
-                background-attachment: scroll;
-                background-size: cover;
-                min-height: 100vh;
+
+
+            .nav-inner {
+                min-height: 55px;
+
+                flex-wrap: wrap;
             }
+
+
+            .mobile-menu {
+                display: block;
+
+                background: transparent;
+
+                border: 1px solid rgba(59, 42, 32, 0.25);
+
+                color: var(--dark-brown);
+
+                border-radius: 4px;
+
+                padding: 7px 11px;
+            }
+
+
+            .logo-link {
+                margin-left: auto;
+            }
+
+
+            .navbar-logo {
+                width: 160px;
+
+                height: 55px;
+            }
+
+
+            .nav-links {
+                width: 100%;
+
+                display: none;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 0;
+
+                padding: 15px 0 5px;
+            }
+
+
+            .nav-links.open {
+                display: flex;
+            }
+
+
+            .nav-links a,
+            .logout-button {
+                display: block;
+
+                padding: 9px 0;
+            }
+
+
+            .hero-content {
+                padding-top: 120px;
+            }
+
+
+            .hero-title {
+                font-size: 3.7rem;
+            }
+
+
+            .hero-text {
+                font-size: 0.9rem;
+            }
+
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+
+            .about-section,
             .contact-section {
-                background-color: #161616;
+                padding: 80px 0;
             }
-            .card-contact {
-                background-color: #212529;
-                border: 1px solid #32383e;
-                border-radius: 0.5rem;
-                padding: 2rem 1.5rem;
-                text-align: center;
-                height: 100%;
+
+
+            .footer-logo {
+                width: 170px;
             }
-            .card-contact i {
-                font-size: 2rem;
-                color: #64a19d;
-                margin-bottom: 1rem;
-            }
-            .nav-logout-btn {
-                text-decoration: none;
-                border: none;
-                background: none;
-                padding: 0.5rem 1rem;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body id="page-top">
 
-        <!-- 1. Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand text-white fw-bold" href="#page-top">HIRAYA</a>
-                <button class="navbar-toggler navbar-toggler-right text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                        
-                        {% if user.is_authenticated %}
-                            {% if user.is_staff or user.is_superuser %}
-                                <li class="nav-item"><a class="nav-link text-warning fw-bold" href="{% url 'profiles:admin_dashboard' %}">Admin</a></li>
-                            {% else %}
-                                <li class="nav-item"><a class="nav-link text-info fw-bold" href="{% url 'profiles:dashboard' %}">My Account</a></li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <form method="POST" action="{% url 'profiles:logout' %}" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="nav-link nav-logout-btn text-white-50">Logout</button>
-                                </form>
-                            </li>
-                        {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'profiles:login' %}">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'profiles:register' %}">Register</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+        }
+
+    </style>
+
+</head>
+
+
+<body id="page-top">
+
+
+
+<!-- =========================================
+     NAVIGATION
+========================================== -->
+
+<nav class="main-nav">
+
+    <div class="container px-4 px-lg-5 nav-inner">
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+            type="button"
+            aria-label="Open menu">
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
+
+
+        <div
+            class="nav-links"
+            id="navLinks">
+
+
+            <a href="#about">
+                About
+            </a>
+
+
+            <a href="#contact">
+                Contact
+            </a>
+
+
+
+            {% if user.is_authenticated %}
+
+
+                {% if user.is_staff or user.is_superuser %}
+
+                    <a href="{% url 'profiles:admin_dashboard' %}">
+                        Admin
+                    </a>
+
+                {% else %}
+
+                    <a href="{% url 'profiles:dashboard' %}">
+                        My Account
+                    </a>
+
+                {% endif %}
+
+
+
+                <form
+                    method="POST"
+                    action="{% url 'profiles:logout' %}"
+                    class="logout-form">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="logout-button">
+
+                        Logout
+
+                    </button>
+
+                </form>
+
+
+            {% else %}
+
+
+                <a href="{% url 'profiles:login' %}">
+                    Login
+                </a>
+
+
+                <a href="{% url 'profiles:register' %}">
+                    Register
+                </a>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- HIRAYA LOGO -->
+
+        <a
+            href="#page-top"
+            class="logo-link">
+
+            <img
+                src="/static/assets/img/hiraya-logo.png"
+                class="navbar-logo"
+                alt="HIRAYA">
+
+        </a>
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================
+     HERO
+========================================== -->
+
+<header class="hero">
+
+
+    <div class="container px-4 px-lg-5">
+
+
+        <div class="hero-content">
+
+
+            <div class="hero-decoration">
+
+                <div class="hero-line"></div>
+
+                <span class="hero-star">
+                    ✦
+                </span>
+
             </div>
-        </nav>
 
-        <!-- 2. Middle Hero Section (Masthead) -->
-        <header class="masthead d-flex align-items-center">
-            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-                <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">HIRAYA</h1>
-                        <h2 class="text-white-50 mx-auto mt-3 mb-5">Empowering engineers through career opportunities, skill development, and mentorship.</h2>
-                        
-                        {% if user.is_authenticated %}
-                            {% if user.is_staff or user.is_superuser %}
-                                <a class="btn btn-primary btn-lg text-uppercase fw-bold" href="{% url 'profiles:admin_dashboard' %}">Admin</a>
-                            {% else %}
-                                <a class="btn btn-primary btn-lg text-uppercase fw-bold" href="{% url 'profiles:dashboard' %}">My Account</a>
-                            {% endif %}
-                        {% else %}
-                            <a class="btn btn-primary btn-lg text-uppercase fw-bold px-4 py-3" href="{% url 'profiles:login' %}">Get Started</a>
-                        {% endif %}
-                    </div>
-                </div>
+
+
+            <h1 class="hero-title">
+
+                Build the career
+
+                <br>
+
+                <span>
+                    you envision.
+                </span>
+
+            </h1>
+
+
+
+            <p class="hero-text">
+
+                Discover career opportunities, strengthen your
+                professional skills, connect with mentors, and prepare
+                yourself for the industry through one platform built
+                for aspiring professionals.
+
+            </p>
+
+
+
+            {% if user.is_authenticated %}
+
+
+                {% if user.is_staff or user.is_superuser %}
+
+                    <a
+                        href="{% url 'profiles:admin_dashboard' %}"
+                        class="hiraya-button">
+
+                        Go to Dashboard
+
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'profiles:dashboard' %}"
+                        class="hiraya-button">
+
+                        Go to Dashboard
+
+                    </a>
+
+                {% endif %}
+
+
+            {% else %}
+
+
+                <a
+                    href="{% url 'profiles:login' %}"
+                    class="hiraya-button">
+
+                    Get Started
+
+                </a>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     ABOUT
+========================================== -->
+
+<section
+    class="about-section"
+    id="about">
+
+
+    <div class="container px-4 px-lg-5">
+
+
+        <div class="text-center">
+
+
+            <p class="section-label">
+                Our Purpose
+            </p>
+
+
+            <h2 class="section-title">
+                About the Platform
+            </h2>
+
+
+
+            <div class="section-divider">
+
+                <div class="divider-line"></div>
+
+                <span class="divider-star">
+                    ✦
+                </span>
+
+                <div class="divider-line"></div>
+
             </div>
-        </header>
 
-        <!-- 3. About Section (#about) -->
-        <section class="about-section text-center bg-black text-white py-5" id="about">
-            <div class="container px-4 px-lg-5 py-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8">
-                        <h2 class="text-white mb-4 text-uppercase tracking-wider">About HIRAYA</h2>
-                        <p class="text-white-50 lead">
-                            HIRAYA is a comprehensive platform engineered to bridge the gap between academic preparation and professional industry standards.
-                        </p>
-                        <p class="text-white-50">
-                            We provide aspiring technical professionals with curated job boards, personalized industry mentorship matching, and automated mock interview environments to prepare you for real-world technical evaluations.
-                        </p>
+
+
+            <p class="section-text">
+
+                HIRAYA is a career and skills development platform
+                designed to bridge the gap between academic preparation
+                and professional industry standards.
+
+                The platform helps aspiring professionals discover
+                career opportunities, connect with mentors, and prepare
+                themselves for real-world employment.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="row features g-4">
+
+
+            <div class="col-md-4">
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="fas fa-briefcase"></i>
+
                     </div>
+
+
+                    <h3>
+                        Job Search
+                    </h3>
+
+
+                    <p>
+
+                        Discover career opportunities that match your
+                        interests, abilities, and professional goals.
+
+                    </p>
+
+
                 </div>
+
             </div>
-        </section>
 
-        <!-- 4. Contact Section (#contact) -->
-        <section class="contact-section py-5 text-white" id="contact">
-            <div class="container px-4 px-lg-5 py-5">
-                <div class="text-center mb-5">
-                    <h2 class="text-white text-uppercase">Contact Us</h2>
-                    <p class="text-white-50">Reach out to our platform team or visit our administration offices.</p>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="fas fa-user-group"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Mentor Matching
+                    </h3>
+
+
+                    <p>
+
+                        Connect with mentors who can provide guidance,
+                        share experience, and support your professional
+                        development.
+
+                    </p>
+
+
                 </div>
-                
-                <div class="row gx-4 gx-lg-5">
-                    <!-- Address Card -->
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card-contact">
-                            <i class="fas fa-map-marked-alt"></i>
-                            <h4 class="text-uppercase m-0 fs-5 text-white">Address</h4>
-                            <hr class="my-4 border-secondary" />
-                            <div class="small text-white-50">Holy Angel University, Sto. Rosario St., Angeles City, Pampanga</div>
-                        </div>
-                    </div>
 
-                    <!-- Email Card -->
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card-contact">
-                            <i class="fas fa-envelope"></i>
-                            <h4 class="text-uppercase m-0 fs-5 text-white">Email</h4>
-                            <hr class="my-4 border-secondary" />
-                            <div class="small text-white-50">
-                                <a href="mailto:support@hiraya.edu.ph" class="text-info text-decoration-none">support@hiraya.edu.ph</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Phone Card -->
-                    <div class="col-md-4">
-                        <div class="card-contact">
-                            <i class="fas fa-mobile-alt"></i>
-                            <h4 class="text-uppercase m-0 fs-5 text-white">Phone</h4>
-                            <hr class="my-4 border-secondary" />
-                            <div class="small text-white-50">+63 (045) 888-2000</div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="footer bg-black small text-center text-white-50 py-4 border-top border-dark">
-            <div class="container px-4 px-lg-5">Copyright &copy; HIRAYA 2026. All rights reserved.</div>
-        </footer>
 
-        <!-- Bootstrap Bundle JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+
+            <div class="col-md-4">
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="fas fa-comments"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Interview Preparation
+                    </h3>
+
+
+                    <p>
+
+                        Strengthen your communication skills and build
+                        confidence for real-world professional
+                        interviews.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     CONTACT
+========================================== -->
+
+<section
+    class="contact-section"
+    id="contact">
+
+
+    <div class="container px-4 px-lg-5">
+
+
+        <div class="text-center">
+
+
+            <p class="section-label">
+                Get In Touch
+            </p>
+
+
+            <h2 class="section-title">
+                Contact Us
+            </h2>
+
+
+
+            <div class="section-divider">
+
+                <div class="divider-line"></div>
+
+                <span class="divider-star">
+                    ✦
+                </span>
+
+                <div class="divider-line"></div>
+
+            </div>
+
+
+
+            <p class="section-text">
+
+                Have questions about HIRAYA?
+                Reach out to us using the information below.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="row contact-items g-4">
+
+
+            <!-- ADDRESS -->
+
+            <div class="col-md-4">
+
+                <div class="contact-card">
+
+
+                    <div class="contact-icon">
+
+                        <i class="fas fa-location-dot"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Address
+                    </h3>
+
+
+                    <p>
+
+                        Holy Angel University
+
+                        <br>
+
+                        Sto. Rosario St., Angeles City
+
+                        <br>
+
+                        Pampanga, Philippines
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="col-md-4">
+
+                <div class="contact-card">
+
+
+                    <div class="contact-icon">
+
+                        <i class="fas fa-envelope"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Email
+                    </h3>
+
+
+                    <p>
+
+                        <a href="mailto:hiraya@gmail.com">
+
+                            hiraya@gmail.com
+
+                        </a>
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="col-md-4">
+
+                <div class="contact-card">
+
+
+                    <div class="contact-icon">
+
+                        <i class="fas fa-phone"></i>
+
+                    </div>
+
+
+                    <h3>
+                        Phone
+                    </h3>
+
+
+                    <p>
+                        +63 917 123 4567
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer">
+
+
+    <div class="container">
+
+
+        <img
+            src="/static/assets/img/hiraya-logo.png"
+            class="footer-logo"
+            alt="HIRAYA">
+
+
+        <div class="footer-text">
+
+            Copyright &copy; HIRAYA 2026.
+            All rights reserved.
+
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================================
+     MOBILE MENU SCRIPT
+========================================== -->
+
+<script>
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const navLinks =
+        document.getElementById("navLinks");
+
+
+    mobileMenu.addEventListener(
+        "click",
+        function () {
+
+            navLinks.classList.toggle("open");
+
+        }
+    );
+
+
+    navLinks
+        .querySelectorAll("a")
+        .forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    if (window.innerWidth <= 768) {
+
+                        navLinks.classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+</script>
+
+
+</body>
 </html>
