@@ -41,14 +41,8 @@
             padding-bottom: 1.5rem;
             margin-bottom: 2rem;
         }
-        h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
-        .nav-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
+        h1 { margin: 0; font-size: 1.8rem; }
+        .nav-actions { display: flex; gap: 0.8rem; }
         .btn-link {
             background-color: var(--accent-blue);
             color: #0f172a;
@@ -59,10 +53,7 @@
             font-size: 0.9rem;
             transition: background-color 0.2s ease;
         }
-        .btn-link:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
-        }
+        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
         .item-card {
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
@@ -73,21 +64,9 @@
             justify-content: space-between;
             align-items: center;
         }
-        .item-card h3 {
-            margin: 0 0 0.4rem 0;
-            font-size: 1.2rem;
-            color: var(--accent-blue);
-        }
-        .meta-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        .empty-text {
-            color: var(--text-muted);
-            text-align: center;
-            padding: 2rem 0;
-        }
+        .item-card h3 { margin: 0 0 0.4rem 0; font-size: 1.2rem; color: var(--accent-blue); }
+        .meta-text { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
+        .empty-text { color: var(--text-muted); text-align: center; padding: 2rem 0; }
     </style>
 </head>
 <body>
@@ -97,10 +76,8 @@
             <div class="nav-actions">
                 {% if user.is_staff or user.is_superuser %}
                     <a href="{% url 'add_mentor' %}" class="btn-link">+ Add Mentor</a>
-                    <a href="{% url 'profiles:admin_dashboard' %}" class="btn-link">Control Board</a>
-                {% else %}
-                    <a href="{% url 'profiles:dashboard' %}" class="btn-link">Dashboard</a>
                 {% endif %}
+                <a href="{% url dashboard_url %}" class="btn-link">&larr; Back to Dashboard</a>
             </div>
         </div>
 

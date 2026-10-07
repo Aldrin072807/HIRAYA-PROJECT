@@ -3,15 +3,28 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import MentorProfile
 from .forms import MentorForm
 
+def get_dashboard_url(user):
+    if user.is_authenticated and user.is_staff:
+        return 'profiles:admin_dashboard'
+    return 'profiles:student_dashboard'
+
 def mentor_list(request):
     """Displays all mentor profiles."""
     mentors = MentorProfile.objects.all()
-    return render(request, 'mentors/mentor_list.html', {'mentors': mentors})
+    dashboard_url = get_dashboard_url(request.user)
+    return render(request, 'mentors/mentor_list.html', {
+        'mentors': mentors,
+        'dashboard_url': dashboard_url,
+    })
 
 def mentor_detail(request, id):
     """Displays a single mentor profile."""
     mentor = get_object_or_404(MentorProfile, id=id)
-    return render(request, 'mentors/mentor_detail.html', {'mentor': mentor})
+    dashboard_url = get_dashboard_url(request.user)
+    return render(request, 'mentors/mentor_detail.html', {
+        'mentor': mentor,
+        'dashboard_url': dashboard_url,
+    })
 
 @staff_member_required
 def add_mentor(request):
@@ -23,7 +36,13 @@ def add_mentor(request):
             return redirect('profiles:admin_dashboard')
     else:
         form = MentorForm()
-    return render(request, 'mentors/mentor_form.html', {'form': form, 'title': 'Add Mentor Profile'})
+        
+    dashboard_url = get_dashboard_url(request.user)
+    return render(request, 'mentors/mentor_form.html', {
+        'form': form, 
+        'title': 'Add Mentor Profile',
+        'dashboard_url': dashboard_url,
+    })
 
 @staff_member_required
 def delete_mentor(request, pk):
@@ -32,4 +51,9 @@ def delete_mentor(request, pk):
     if request.method == 'POST':
         mentor.delete()
         return redirect('profiles:admin_dashboard')
-    return render(request, 'jobs/job_confirm_delete.html', {'object': mentor})
+        
+    dashboard_url = get_dashboard_url(request.user)
+    return render(request, 'jobs/job_confirm_delete.html', {
+        'object': mentor,
+        'dashboard_url': dashboard_url,
+    })

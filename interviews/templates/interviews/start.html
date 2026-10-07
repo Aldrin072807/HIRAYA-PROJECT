@@ -44,6 +44,11 @@
             line-height: 1.6;
             margin-bottom: 2rem;
         }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
         .btn {
             background-color: var(--accent-blue);
             color: #0f172a;
@@ -55,9 +60,21 @@
             cursor: pointer;
             transition: background-color 0.2s ease;
             width: 100%;
+            text-decoration: none;
+            box-sizing: border-box;
+            display: block;
         }
         .btn:hover {
             background-color: var(--accent-hover);
+            color: #ffffff;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .btn-secondary:hover {
+            background-color: var(--border-color);
             color: #ffffff;
         }
     </style>
@@ -68,7 +85,13 @@
         <p>You will be presented with timed technical and behavioral questions. Your responses will be logged for review upon completion.</p>
         <form method="POST" action="{% url 'interviews:start_interview' %}">
             {% csrf_token %}
-            <button type="submit" class="btn">Start Interview Session</button>
+            {% if job %}
+                <input type="hidden" name="job_id" value="{{ job.id }}">
+            {% endif %}
+            <div class="btn-group">
+                <button type="submit" class="btn">Start Interview Session</button>
+                <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}" class="btn btn-secondary">&larr; Back to Dashboard</a>
+            </div>
         </form>
     </div>
 </body>

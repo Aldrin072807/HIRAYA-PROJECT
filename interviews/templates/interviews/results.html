@@ -34,6 +34,9 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 1.5rem;
             margin-bottom: 2rem;
@@ -67,6 +70,11 @@
             margin-top: 0.8rem;
             white-space: pre-wrap;
         }
+        .action-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
         .btn-link {
             display: inline-block;
             text-align: center;
@@ -76,7 +84,6 @@
             text-decoration: none;
             padding: 0.8rem 1.8rem;
             border-radius: 8px;
-            margin-top: 1rem;
             transition: background-color 0.2s ease;
         }
         .btn-link:hover {
@@ -88,8 +95,11 @@
 <body>
     <div class="container">
         <div class="summary-header">
-            <h1>Interview Session Summary</h1>
-            <div class="meta">Session ID: #{{ session.id }} &nbsp;|&nbsp; Status: Completed</div>
+            <div>
+                <h1>Interview Session Summary</h1>
+                <div class="meta">Session ID: #{{ session.id }} &nbsp;|&nbsp; Status: Completed</div>
+            </div>
+            <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:student_dashboard' %}{% endif %}" class="btn-link">&larr; Back to Dashboard</a>
         </div>
 
         {% for submission in submissions %}
@@ -106,7 +116,9 @@
             <p style="color: var(--text-muted);">No responses recorded for this session.</p>
         {% endfor %}
 
-        <a href="{% url 'interviews:start_interview' %}" class="btn-link">Start Another Session</a>
+        <div class="action-group">
+            <a href="{% url 'interviews:start_interview' %}" class="btn-link">Start Another Session</a>
+        </div>
     </div>
 </body>
 </html>

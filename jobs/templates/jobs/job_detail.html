@@ -14,6 +14,7 @@
             --accent-hover: #0284c7;
             --border-color: #334155;
             --input-bg: #0f172a;
+            --success-green: #22c55e;
         }
         body {
             background-color: var(--bg-color);
@@ -29,117 +30,76 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2.5rem;
-            max-width: 650px;
+            max-width: 750px;
             width: 100%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        .back-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-        h1 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.8rem;
-        }
-        .company-info {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .description-box {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            white-space: pre-wrap;
-        }
-        .actions-group {
+        .header-meta {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
-        .btn {
+        h1 { margin: 0; font-size: 1.8rem; }
+        .nav-actions { display: flex; gap: 0.8rem; }
+        .btn-link {
             background-color: var(--accent-blue);
             color: #0f172a;
             font-weight: 600;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
             text-decoration: none;
-            box-sizing: border-box;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
             transition: background-color 0.2s ease;
         }
-        .btn:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
-        }
-        .btn-secondary {
-            background-color: transparent;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-        }
-        .btn-secondary:hover {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--accent-blue);
-        }
-        .status-badge {
-            display: inline-block;
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--accent-blue);
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            font-weight: 600;
-        }
+        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
+        .btn-disabled { background-color: var(--border-color); color: var(--text-muted); cursor: not-allowed; }
+        .detail-section { margin-bottom: 1.5rem; line-height: 1.6; }
+        .detail-section label { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 0.3rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="{% url 'jobs:job_list' %}" class="back-link">← Back to Job Listings</a>
-
-        <h1>{{ job.title }}</h1>
-        <div class="company-info">{{ job.company }} — {{ job.location|default:"Remote" }}</div>
-
-        <div class="description-box">
-            {{ job.description }}
+        <div class="header-meta">
+            <h1>{{ job.title }}</h1>
+            <div class="nav-actions">
+                <a href="{% url 'jobs:job_list' %}" class="btn-link">All Jobs</a>
+                <a href="{% url dashboard_url %}" class="btn-link">&larr; Back to Dashboard</a>
+            </div>
         </div>
 
-        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-            Posted: {{ job.posted_at|date:"M d, Y" }}
+        <div class="detail-section">
+            <label>Company</label>
+            <div>{{ job.company|default:"Not specified" }}</div>
         </div>
 
-        <div class="actions-group">
+        {% if job.location %}
+        <div class="detail-section">
+            <label>Location</label>
+            <div>{{ job.location }}</div>
+        </div>
+        {% endif %}
+
+        {% if job.description %}
+        <div class="detail-section">
+            <label>Description</label>
+            <div>{{ job.description }}</div>
+        </div>
+        {% endif %}
+
+        <div class="detail-section" style="margin-top: 2rem;">
             {% if user.is_authenticated %}
                 {% if already_applied %}
-                    <div class="status-badge">You have already applied to this job</div>
+                    <button class="btn-link btn-disabled" disabled>Already Applied</button>
                 {% else %}
-                    <form method="post" action="{% url 'jobs:apply_to_job' job.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">Apply Now</button>
-                    </form>
+                    <a href="{% url 'jobs:apply_to_job' job.id %}" class="btn-link">Apply Now</a>
                 {% endif %}
-
-                <!-- AI Practice Interview Link -->
-                <form method="post" action="{% url 'interviews:start_interview' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="job_id" value="{{ job.id }}">
-                    <button type="submit" class="btn btn-secondary">Practice Mock Interview for this Role</button>
-                </form>
             {% else %}
-                <div class="status-badge">Log in to apply or practice mock interviews</div>
+                <a href="{% url 'profiles:login' %}" class="btn-link">Log in to Apply</a>
             {% endif %}
         </div>
     </div>

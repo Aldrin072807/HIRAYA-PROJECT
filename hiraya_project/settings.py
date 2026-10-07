@@ -132,7 +132,16 @@ LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'profiles:dashboard'
 LOGIN_URL = 'profiles:login'
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+import os
+from dotenv import load_dotenv, find_dotenv
+
+# Automatically locate and force-load the .env file regardless of folder depth
+load_dotenv(find_dotenv(), override=True)
+
+# Set API Keys
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
 
 AUTHENTICATION_BACKENDS = [
     'profiles.backends.EmailOrUsernameModelBackend',

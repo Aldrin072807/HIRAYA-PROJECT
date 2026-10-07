@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Mentor Profile | HIRAYA</title>
+    <title>{{ title|default:"Mentor Form" }} | HIRAYA</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -21,11 +21,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 3rem 1rem;
             margin: 0;
-            padding: 2rem 1rem;
-            box-sizing: border-box;
         }
         .container {
             background-color: var(--card-bg);
@@ -36,32 +33,31 @@
             width: 100%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        .back-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        h1 {
-            margin: 0 0 1.5rem 0;
-            font-size: 1.8rem;
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
-        p {
-            margin-bottom: 1.2rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: var(--text-muted);
+        h1 { margin: 0; font-size: 1.8rem; }
+        .btn-link {
+            background-color: var(--accent-blue);
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
             font-size: 0.9rem;
-            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-        input[type="text"], 
-        textarea {
+        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
+        form p { margin-bottom: 1.2rem; }
+        form label { display: block; margin-bottom: 0.4rem; color: var(--accent-blue); font-weight: 600; }
+        form input, form textarea, form select {
             width: 100%;
             padding: 0.75rem;
             background-color: var(--input-bg);
@@ -69,51 +65,22 @@
             border-radius: 6px;
             color: var(--text-main);
             box-sizing: border-box;
-            font-family: inherit;
-            font-size: 0.95rem;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-        }
-        .helptext {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
-        }
-        .btn {
-            background-color: var(--accent-blue);
-            color: #0f172a;
-            font-weight: 600;
-            border: none;
-            padding: 0.85rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1.5rem;
-            transition: background-color 0.2s ease;
-        }
-        .btn:hover {
-            background-color: var(--accent-hover);
-            color: #ffffff;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="{% url 'mentor_list' %}" class="back-link">← Back to Mentors</a>
-        <h1>Create Mentor Profile</h1>
+        <div class="header-meta">
+            <h1>{{ title|default:"Add Mentor Profile" }}</h1>
+            <a href="{% if dashboard_url %}{% url dashboard_url %}{% else %}{% url 'profiles:admin_dashboard' %}{% endif %}" class="btn-link">&larr; Back to Dashboard</a>
+        </div>
 
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn">Save Mentor Profile</button>
+            <div style="margin-top: 1.5rem;">
+                <button type="submit" class="btn-link">Save Mentor</button>
+            </div>
         </form>
     </div>
 </body>

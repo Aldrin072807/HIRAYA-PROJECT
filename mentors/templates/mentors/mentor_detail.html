@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ mentor.user.get_full_name|default:mentor.user.username }} | HIRAYA</title>
+    <title>Mentor Detail | HIRAYA</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -11,6 +11,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-blue: #38bdf8;
+            --accent-hover: #0284c7;
             --border-color: #334155;
             --input-bg: #0f172a;
         }
@@ -28,80 +29,76 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 2.5rem;
-            max-width: 650px;
+            max-width: 750px;
             width: 100%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        .back-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-        h1 {
-            margin: 0 0 0.4rem 0;
-            font-size: 1.8rem;
-        }
-        .field-subtitle {
-            color: var(--accent-blue);
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        h1 { margin: 0; font-size: 1.8rem; }
+        .nav-actions { display: flex; gap: 0.8rem; }
+        .btn-link {
+            background-color: var(--accent-blue);
+            color: #0f172a;
             font-weight: 600;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
         }
-        .info-block {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin-bottom: 1.2rem;
-        }
-        .info-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.4rem;
-            font-weight: 600;
-        }
-        .info-value {
-            font-size: 1rem;
-            line-height: 1.5;
-        }
+        .btn-link:hover { background-color: var(--accent-hover); color: #ffffff; }
+        .detail-section { margin-bottom: 1.5rem; line-height: 1.6; }
+        .detail-section label { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 0.3rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="{% url 'mentor_list' %}" class="back-link">← Back to Mentors</a>
-
-        <h1>{{ mentor.user.get_full_name|default:mentor.user.username }}</h1>
-        <div class="field-subtitle">{{ mentor.career_field }}</div>
-
-        <div class="info-block">
-            <div class="info-label">Expertise</div>
-            <div class="info-value">{{ mentor.expertise }}</div>
+        <div class="header-meta">
+            <h1>
+                {% if mentor.user %}
+                    {{ mentor.user.get_full_name|default:mentor.user.username }}
+                {% else %}
+                    {{ mentor.name|default:"Mentor Profile" }}
+                {% endif %}
+            </h1>
+            <div class="nav-actions">
+                <a href="{% url 'mentor_list' %}" class="btn-link">All Mentors</a>
+                <a href="{% url dashboard_url %}" class="btn-link">&larr; Back to Dashboard</a>
+            </div>
         </div>
+
+        {% if mentor.career_field %}
+        <div class="detail-section">
+            <label>Field</label>
+            <div>{{ mentor.career_field }}</div>
+        </div>
+        {% endif %}
+
+        {% if mentor.expertise or mentor.skills %}
+        <div class="detail-section">
+            <label>Expertise & Skills</label>
+            <div>{{ mentor.expertise|default:mentor.skills }}</div>
+        </div>
+        {% endif %}
 
         {% if mentor.bio %}
-        <div class="info-block">
-            <div class="info-label">Bio</div>
-            <div class="info-value">{{ mentor.bio }}</div>
+        <div class="detail-section">
+            <label>Bio</label>
+            <div>{{ mentor.bio }}</div>
         </div>
         {% endif %}
 
-        {% if mentor.experience %}
-        <div class="info-block">
-            <div class="info-label">Experience</div>
-            <div class="info-value">{{ mentor.experience }}</div>
-        </div>
-        {% endif %}
-
-        {% if mentor.availability %}
-        <div class="info-block">
-            <div class="info-label">Availability</div>
-            <div class="info-value">{{ mentor.availability }}</div>
+        {% if mentor.email %}
+        <div class="detail-section">
+            <label>Contact Email</label>
+            <div>{{ mentor.email }}</div>
         </div>
         {% endif %}
     </div>
